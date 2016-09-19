@@ -14,11 +14,32 @@ public class IRExamenator
         EXAM_CLASSES.add(c);
     }
     
-    public static void test(int [] realization, IRClass expectedClass, boolean log) 
+    public static boolean test(int [] realization, IRClass expectedClass, boolean log) 
+    {
+        IRClass recognized = recognize(realization);
+        boolean isRcnz;
+        
+        if (recognized.equals(expectedClass))
+        {
+            isRcnz = true;
+        }
+        else
+        {
+            isRcnz = false;
+        }
+        
+        if(log)
+        {
+            System.out.println(recognized.getName() + " recognized\t" + expectedClass.getName() + " expected\t " + (isRcnz ? "correct" : "incorrect"));
+        }
+        
+        return isRcnz;
+    }
+    
+    public static IRClass recognize(int [] realization)
     {
         double minDistance = Integer.MAX_VALUE;
-        String recognizedClass = "unrecognized"; // chang to IRClass ?
-        boolean 
+        IRClass recognizedClass = null; // chang to IRClass ?
         
         for (IRClass examinee : EXAM_CLASSES)
         {
@@ -26,19 +47,11 @@ public class IRExamenator
             if (dst < minDistance)
             {
                 minDistance = dst;
-                recognizedClass = examinee.getName();
+                recognizedClass = examinee; // should be cloned?
             }
         }
         
-        if(log)
-        {
-            System.out.println(recognizedClass + " recognized\t" + expectedClass.getName() + " expected");
-        }
-    }
-    
-    public static IRClass recognize(int [] realization)
-    {
-        return null;
+        return recognizedClass;
     }
     
 }

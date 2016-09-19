@@ -35,7 +35,7 @@ public class BerestLabs {
         IRExamenator.addExamClass(class2);
         IRExamenator.addExamClass(class1);
         
-        //IRExamenator.test(class1.getEtalonVector(), class1);
+        IRExamenator.test(class1.getEtalonVector(), class1, true);
     }
     
 }
