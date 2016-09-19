@@ -15,9 +15,31 @@ public class IRExamenator
         EXAM_CLASSES.add(c);
     }
     
-    public static void exam(Map testMaterial)
+    /**
+     * exam clases and show statictics
+     * 
+     * @param testMaterial ArrayList with pairs vector-expected class
+     * @param log 'true' to print info on console
+     */
+    public static void exam(ArrayList<ExamPair> testMaterial, boolean log)
     {
+        int sucessCount = 0;
+        int failCount = 0;
+        for (ExamPair pair : testMaterial)
+        {
+            boolean result = test(pair.getVector(), pair.getExpectedClass(), log);
+            if(result)
+            {
+                sucessCount++;
+            }
+            else
+            {
+                failCount++;
+            }
+        }
         
+        System.out.println("Exam finished");
+        System.out.println(sucessCount + " recognized correctly, " + failCount + " recognized wrong");
     }
     
     /**
@@ -70,6 +92,34 @@ public class IRExamenator
         }
         
         return recognizedClass;
+    }
+    
+    /**
+     * class to contain exam pair (vector - expected class)
+     * used to send data to exam method by one call
+     * 
+     * used because TreeMap cannot used vith arrays in key
+     */
+    public static class ExamPair
+    {
+        int[] vector;
+        IRClass expectedClass;
+
+        public ExamPair(int [] vector, IRClass expectedClass) 
+        {
+            this.vector = vector;
+            this.expectedClass = expectedClass;
+        } 
+        
+        int[] getVector()
+        {
+            return vector;
+        }
+        
+        IRClass getExpectedClass()
+        {
+            return expectedClass;
+        }
     }
     
 }

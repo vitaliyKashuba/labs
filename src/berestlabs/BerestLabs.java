@@ -6,6 +6,7 @@
 package berestlabs;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 /**
@@ -21,26 +22,44 @@ public class BerestLabs {
     {
         String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\1.bmp";
         String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\2.bmp";
+        int learningLimit = 80;
         
         int[][] m1 = IRUtil.imageToMatrix(IRUtil.loadImage(path));
-        System.out.println(m.length + " " + m[0].length);
+        int[][] m2 = IRUtil.imageToMatrix(IRUtil.loadImage(path2));
         
         IRClass class1 = new IRClass();
-        class1.learn(IRUtil.imageToMatrix(IRUtil.loadImage(path)), 80);
+        class1.learn(m1, learningLimit);
         
         IRClass class2 = new IRClass();
-        class2.learn(IRUtil.imageToMatrix(IRUtil.loadImage(path2)), 80);
+        class2.learn(m2, learningLimit);
         
         System.out.println(IRClass.isIntersect(class1, class2));
         
         IRExamenator.addExamClass(class2);
         IRExamenator.addExamClass(class1);
         
-        IRExamenator.test(class1.getEtalonVector(), class1, true);
+        //IRExamenator.test(class1.getEtalonVector(), class1, true);
         
-        TreeMap<int[], IRClass> unlearnedRealizations = new TreeMap<>();
+        /*TreeMap<int[], IRClass> unlearnedRealizations = new TreeMap<>();
+
+        for (int i = learningLimit; i < m1.length; i++)
+        {
+            System.out.println(m1);
+            //unlearnedRealizations.put(m1[i], class1);
+            //unlearnedRealizations.put(m2[i], class2);
+        }
         
+        System.out.println(unlearnedRealizations.size());*/
         
+        ArrayList<IRExamenator.ExamPair> examPairs = new ArrayList<>();
+        for (int i = learningLimit; i < m1.length; i++)
+        {
+            examPairs.add(new IRExamenator.ExamPair(m1[i], class1));
+            examPairs.add(new IRExamenator.ExamPair(m2[i], class2));
+        }
+        
+        //System.out.println(examPairs.size());
+        IRExamenator.exam(examPairs, true);
     }
     
 }
