@@ -5,12 +5,14 @@
  */
 package berestlabs;
 
+import java.awt.List;
+
 /**
  * Image Recognition class
  */
 public class IRClass 
 {
-    static int classcount=0;
+    static int CLASSCOUNT=0;
     
     private String name;
     private double radius;
@@ -19,8 +21,8 @@ public class IRClass
     
     public IRClass() 
     {
-        setName("class"+classcount);
-        classcount++;
+        setName("class"+CLASSCOUNT);
+        CLASSCOUNT++;
     }
     
     /**
