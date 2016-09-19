@@ -18,13 +18,19 @@ public class BerestLabs {
      */
     public static void main(String[] args) throws IOException 
     {
-        String path = "G:\\__haveNoIdeaWhatImDoingHere\\BerestLabs\\1.jpg";
+        String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\1.bmp";
+        String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\2.bmp";
+        
         int[][] m = IRUtil.imageToMatrix(IRUtil.loadImage(path));
         System.out.println(m.length + " " + m[0].length);
         
-        //IRClass class1 = new IRClass();
-        //class1.learn(m, 10);
-        //System.out.println(class1.realizations.length + " " + class1.realizations[0].length);
+        IRClass class1 = new IRClass();
+        class1.learn(IRUtil.imageToMatrix(IRUtil.loadImage(path)), 80);
+        
+        IRClass class2 = new IRClass();
+        class2.learn(IRUtil.imageToMatrix(IRUtil.loadImage(path2)), 80);
+        
+        System.out.println(IRClass.isIntersect(class1, class2));
     }
     
 }

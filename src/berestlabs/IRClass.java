@@ -12,10 +12,10 @@ public class IRClass
 {
     static int classcount=0;
     
-    String name;
-    double radius;
-    int[] etalonVector;
-    int[][] realizations;
+    private String name;
+    private double radius;
+    private int[] etalonVector;
+    private int[][] realizations;
     
     public IRClass() 
     {
@@ -27,7 +27,7 @@ public class IRClass
      * calculate distance between two vectors
      * @return distance
      */
-    public static double calculateDistance(int [] vector1, int [] vector2)
+    private static double calculateDistance(int [] vector1, int [] vector2)
     {
         double sum = 0;
         for (int i = 0; i < vector1.length; i++)
@@ -37,9 +37,41 @@ public class IRClass
         return Math.sqrt(sum);
     }
     
+    /**
+     * check is classes are intersect
+     * @return 
+     */
+    public static boolean isIntersect(IRClass class1, IRClass class2)
+    {
+        if (calculateDistance(class1.getEtalonVector(), class2.getEtalonVector()) > class1.getRadius()+class2.getRadius())
+        {
+            return false;
+        }
+        else
+        {
+            //System.out.println("r2 " + class1.getRadius() + " r2 " + class2.getRadius() + " dist " + calculateDistance(class1.getEtalonVector(), class2.getEtalonVector()) + " ");
+            return true;
+        }
+    }
+    
     public void setName(String name)
     {
         this.name = name;
+    }
+    
+    public String getName()
+    {
+        return name;
+    }
+    
+    public double getRadius()
+    {
+        return radius;
+    }
+    
+    public int[] getEtalonVector()
+    {
+        return etalonVector;
     }
     
     /**
