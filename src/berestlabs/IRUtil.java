@@ -33,9 +33,9 @@ public class IRUtil
     {
         int h = img.getHeight();
         int w = img.getWidth();
-        int[][] matrix = new int [w][h];
+        int[][] matrix = new int [h][w];
         Color color;
-        
+        //System.out.println("height" + h + " " + "width" + w);
         for(int i = 0; i< h; i++)
         {
            for(int k = 0; k < w; k++) 

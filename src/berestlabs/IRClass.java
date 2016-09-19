@@ -15,6 +15,7 @@ public class IRClass
     String name;
     int radius;
     int[] etalonVector;
+    int[][] realizations;
     
     public IRClass() 
     {
@@ -34,5 +35,40 @@ public class IRClass
     public void setName(String name)
     {
         this.name = name;
-    }  
+    }
+    
+    /**
+     * add realizations of class, calculate etalon vector and find radius
+     * @param learnMatrix matrix with realizations
+     * @param limit value of realizations to learn. should be less then learnMatrix height
+     */
+    public void learn(int[][] learnMatrix, int limit) throws IllegalArgumentException
+    {
+        if (learnMatrix.length < limit)
+        {
+            throw new IllegalArgumentException("param limit should be <"+learnMatrix.length);
+        }
+        
+        int width = learnMatrix[0].length;
+        realizations = new int[limit][width];
+        for (int i = 0; i < limit; i++)
+        {
+            for (int j = 0; j < width; j ++)
+            {
+                realizations[i][j] = learnMatrix[i][j];
+            }
+        }
+    }
+    
+    private void calculateEtalon()
+    {
+        
+    }
+    
+    private void findRadius()
+    {
+        
+    }
+    
+    
 }
