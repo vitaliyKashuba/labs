@@ -31,6 +31,11 @@ public class BerestLabs {
         class2.learn(IRUtil.imageToMatrix(IRUtil.loadImage(path2)), 80);
         
         System.out.println(IRClass.isIntersect(class1, class2));
+        
+        IRExamenator.addExamClass(class2);
+        IRExamenator.addExamClass(class1);
+        
+        //IRExamenator.test(class1.getEtalonVector(), class1);
     }
     
 }
