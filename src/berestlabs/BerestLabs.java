@@ -18,48 +18,78 @@ public class BerestLabs {
     /**
      * @param args the command line arguments
      */
+    public static int LEARNING_LIMIT = 80;
+    
     public static void main(String[] args) throws IOException 
     {
-        String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\1.bmp";
-        String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\2.bmp";
-        int learningLimit = 80;
         
-        int[][] m1 = IRUtil.imageToMatrix(IRUtil.loadImage(path));
-        int[][] m2 = IRUtil.imageToMatrix(IRUtil.loadImage(path2));
+        if (args.length > 0) //run code
+        {
+            ArrayList<IRExamenator.ExamPair> examPairs = new ArrayList<>();
+            for (String path : args)
+            {
+                int[][] mas = IRUtil.imageToMatrix(IRUtil.loadImage(path));
+                IRClass c = new IRClass();
+                c.learn(mas, LEARNING_LIMIT);
+                IRExamenator.addExamClass(c);
+                
+                for (int i = LEARNING_LIMIT; i < mas.length; i++)
+                {
+                    examPairs.add(new IRExamenator.ExamPair(mas[i], c));
+                }
+            }
+            IRExamenator.exam(examPairs, true);
+        }
         
-        IRClass class1 = new IRClass();
-        class1.learn(m1, learningLimit);
-        
-        IRClass class2 = new IRClass();
-        class2.learn(m2, learningLimit);
-        
-        System.out.println(IRClass.isIntersect(class1, class2));
-        
-        IRExamenator.addExamClass(class2);
-        IRExamenator.addExamClass(class1);
-        
-        //IRExamenator.test(class1.getEtalonVector(), class1, true);
-        
-        /*TreeMap<int[], IRClass> unlearnedRealizations = new TreeMap<>();
+        else //debug\run-from-IDE-code
+        {
+            String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\1.bmp";
+            String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\2.bmp";
+            String path3 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\8\\2.bmp";
+            
+            int[][] m1 = IRUtil.imageToMatrix(IRUtil.loadImage(path));
+            int[][] m2 = IRUtil.imageToMatrix(IRUtil.loadImage(path2));
+            int[][] m3 = IRUtil.imageToMatrix(IRUtil.loadImage(path3));
 
-        for (int i = learningLimit; i < m1.length; i++)
-        {
-            System.out.println(m1);
-            //unlearnedRealizations.put(m1[i], class1);
-            //unlearnedRealizations.put(m2[i], class2);
+            IRClass class1 = new IRClass();
+            class1.learn(m1, LEARNING_LIMIT);
+
+            IRClass class2 = new IRClass();
+            class2.learn(m2, LEARNING_LIMIT);
+
+            IRClass class3 = new IRClass();
+            class3.learn(m3, LEARNING_LIMIT);
+
+            System.out.println(IRClass.isIntersect(class1, class2));
+
+            IRExamenator.addExamClass(class2);
+            IRExamenator.addExamClass(class1);
+            IRExamenator.addExamClass(class3);
+
+            //IRExamenator.test(class1.getEtalonVector(), class1, true);
+
+            /*TreeMap<int[], IRClass> unlearnedRealizations = new TreeMap<>();
+
+            for (int i = learningLimit; i < m1.length; i++)
+            {
+                System.out.println(m1);
+                //unlearnedRealizations.put(m1[i], class1);
+                //unlearnedRealizations.put(m2[i], class2);
+            }
+
+            System.out.println(unlearnedRealizations.size());*/
+
+            ArrayList<IRExamenator.ExamPair> examPairs = new ArrayList<>();
+            for (int i = LEARNING_LIMIT; i < m1.length; i++)
+            {
+                examPairs.add(new IRExamenator.ExamPair(m1[i], class1));
+                examPairs.add(new IRExamenator.ExamPair(m2[i], class2));
+                examPairs.add(new IRExamenator.ExamPair(m3[i], class3));
+            }
+
+            //System.out.println(examPairs.size());
+            IRExamenator.exam(examPairs, true);
         }
-        
-        System.out.println(unlearnedRealizations.size());*/
-        
-        ArrayList<IRExamenator.ExamPair> examPairs = new ArrayList<>();
-        for (int i = learningLimit; i < m1.length; i++)
-        {
-            examPairs.add(new IRExamenator.ExamPair(m1[i], class1));
-            examPairs.add(new IRExamenator.ExamPair(m2[i], class2));
-        }
-        
-        //System.out.println(examPairs.size());
-        IRExamenator.exam(examPairs, true);
     }
     
 }

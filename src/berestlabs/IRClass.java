@@ -29,7 +29,7 @@ public class IRClass
      * calculate distance between two vectors
      * @return distance
      */
-    public static double calculateDistance(int [] vector1, int [] vector2)
+    public static double calculateDistance(int [] vector1, int [] vector2) //move to IRUtil?
     {
         double sum = 0;
         for (int i = 0; i < vector1.length; i++)
