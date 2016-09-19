@@ -6,6 +6,7 @@
 package berestlabs;
 
 import java.io.IOException;
+import java.util.TreeMap;
 
 /**
  *
@@ -21,7 +22,7 @@ public class BerestLabs {
         String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\1.bmp";
         String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\2.bmp";
         
-        int[][] m = IRUtil.imageToMatrix(IRUtil.loadImage(path));
+        int[][] m1 = IRUtil.imageToMatrix(IRUtil.loadImage(path));
         System.out.println(m.length + " " + m[0].length);
         
         IRClass class1 = new IRClass();
@@ -36,6 +37,10 @@ public class BerestLabs {
         IRExamenator.addExamClass(class1);
         
         IRExamenator.test(class1.getEtalonVector(), class1, true);
+        
+        TreeMap<int[], IRClass> unlearnedRealizations = new TreeMap<>();
+        
+        
     }
     
 }

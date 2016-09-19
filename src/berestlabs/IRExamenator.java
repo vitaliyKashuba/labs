@@ -1,6 +1,7 @@
 package berestlabs;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * class to test IRClass for correct recognition
@@ -14,6 +15,19 @@ public class IRExamenator
         EXAM_CLASSES.add(c);
     }
     
+    public static void exam(Map testMaterial)
+    {
+        
+    }
+    
+    /**
+     * test recognition
+     * 
+     * @param realization vector of class realization
+     * @param expectedClass
+     * @param log 'true' to print info on console
+     * @return true if result of recognition is same to expected result
+     */
     public static boolean test(int [] realization, IRClass expectedClass, boolean log) 
     {
         IRClass recognized = recognize(realization);
@@ -36,6 +50,10 @@ public class IRExamenator
         return isRcnz;
     }
     
+    /**
+     * try to recognize class
+     * @param realization vector of class realization
+     */
     public static IRClass recognize(int [] realization)
     {
         double minDistance = Integer.MAX_VALUE;
