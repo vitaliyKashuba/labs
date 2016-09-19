@@ -13,7 +13,7 @@ public class IRClass
     static int classcount=0;
     
     String name;
-    int radius;
+    double radius;
     int[] etalonVector;
     int[][] realizations;
     
@@ -24,12 +24,17 @@ public class IRClass
     }
     
     /**
-     * calculate distance between two classes
+     * calculate distance between two vectors
      * @return distance
      */
-    public static int findDistance(IRClass class1, IRClass class2)
+    public static double calculateDistance(int [] vector1, int [] vector2)
     {
-        return 0;
+        double sum = 0;
+        for (int i = 0; i < vector1.length; i++)
+        {
+            sum = sum + Math.pow(vector1[i]-vector2[i], 2);
+        }
+        return Math.sqrt(sum);
     }
     
     public void setName(String name)
@@ -58,16 +63,40 @@ public class IRClass
                 realizations[i][j] = learnMatrix[i][j];
             }
         }
+        
+        calculateEtalon();
+        findRadius();
     }
     
     private void calculateEtalon()
     {
+        etalonVector = new int[realizations[0].length];
         
+        for (int w = 0; w < etalonVector.length; w++)
+        {
+            int sum = 0;
+            for (int h = 0; h < realizations.length; h++)
+            {
+                sum = sum + realizations[h][w];
+            }
+            etalonVector[w] = sum / realizations.length;
+        }    
     }
     
+    /**
+     * finds max radius
+     */
     private void findRadius()
     {
-        
+        radius = 0;
+        for(int[] realization : realizations)
+        {
+            double newRadius = calculateDistance(etalonVector, realization);
+            if (newRadius > radius)
+            {
+                radius = newRadius;
+            }
+        }
     }
     
     
