@@ -18,6 +18,9 @@ public class IRClass
     private double radius;
     private int[] etalonVector;
     private int[][] realizations;
+    private TwoDimensionalData twoDimensionalData;
+    private int attributesCount; // etalon length, realizations width
+    private int realizationsCount; // realizations.length
     
     public IRClass() 
     {
@@ -76,6 +79,11 @@ public class IRClass
         return etalonVector;
     }
     
+    public TwoDimensionalData getTwoDimensionalData()
+    {
+        return twoDimensionalData;
+    }
+    
     /**
      * add realizations of class, calculate etalon vector and find radius
      * @param learnMatrix matrix with realizations
@@ -100,6 +108,9 @@ public class IRClass
         
         calculateEtalon();
         findRadius();
+        
+        attributesCount = etalonVector.length;
+        realizationsCount = realizations.length;
     }
     
     private void calculateEtalon()
@@ -133,5 +144,66 @@ public class IRClass
         }
     }
     
+    /**
+     * create two-dimensial coordinates of etalon and realizations inside IRClass
+     * can be bugs if attributes value is not divide on 2
+     */
+    public void convertToTwoDimensialSpace()
+    {
+        int [] tdEtalon = new int[2];
+        int [][] tdRealizations = new int[realizationsCount][2];
+        
+        int x1 =0, x2 = 0;
+        for (int i = 0; i < attributesCount/2; i++)
+        {
+            x1 = x1 + etalonVector[i];
+            x2 = x2 + etalonVector[attributesCount - i];
+        }
+        tdEtalon[0] = x1/(attributesCount/2);
+        tdEtalon[1] = x2/(attributesCount/2);
+        
+        for (int h = 0; h < realizationsCount; h++)
+        {
+            x1 = 0;
+            x2 = 0;
+            
+            for (int w = 0; w < attributesCount/2; w++)
+            {
+                x1 = x1 + realizations[h][w];
+                x2 = x2 + realizations[h][attributesCount - w];
+            }
+            
+            tdRealizations[h][0] = x1/attributesCount/2;
+            tdRealizations[h][1] = x2/attributesCount/2;
+        }
+        
+        twoDimensionalData = new TwoDimensionalData(tdEtalon, tdRealizations);
+    }
+    
+    /**
+     * contain etalon and realizations for two-dimensional graphic
+     */
+    private class TwoDimensionalData
+    {
+        private int [] twoDimEtalon;
+        private int [][] twoDimRealizations;
+
+        public TwoDimensionalData(int[] twoDimEtalon, int[][] twoDimRealizations) 
+        {
+            this.twoDimEtalon = twoDimEtalon;
+            this.twoDimRealizations = twoDimRealizations;
+        }
+
+        public int[] getTwoDimEtalon() 
+        {
+            return twoDimEtalon;
+        }
+
+        public int[][] getTwoDimRealizations() 
+        {
+            return twoDimRealizations;
+        }
+    
+    }
     
 }

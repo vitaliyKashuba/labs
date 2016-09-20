@@ -95,7 +95,7 @@ public class BerestLabs {
             IRExamenator.exam(examPairs, true);
             
             double[] xData = new double[] { 0.0, 1.0, 2.0 };
-            double[] yData = new double[] { 3.0, 1.0, 0.0 };
+            double[] yData = new double[] { 0.0, 1.0, 0.0 };
 
             // Create Chart
             XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(2x)", xData, yData);
