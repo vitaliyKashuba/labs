@@ -157,7 +157,7 @@ public class IRClass
         for (int i = 0; i < attributesCount/2; i++)
         {
             x1 = x1 + etalonVector[i];
-            x2 = x2 + etalonVector[attributesCount - i];
+            x2 = x2 + etalonVector[attributesCount - i-1];
         }
         tdEtalon[0] = x1/(attributesCount/2);
         tdEtalon[1] = x2/(attributesCount/2);
@@ -170,11 +170,11 @@ public class IRClass
             for (int w = 0; w < attributesCount/2; w++)
             {
                 x1 = x1 + realizations[h][w];
-                x2 = x2 + realizations[h][attributesCount - w];
+                x2 = x2 + realizations[h][attributesCount - w-1];
             }
             
-            tdRealizations[h][0] = x1/attributesCount/2;
-            tdRealizations[h][1] = x2/attributesCount/2;
+            tdRealizations[h][0] = x1/(attributesCount/2);
+            tdRealizations[h][1] = x2/(attributesCount/2);
         }
         
         twoDimensionalData = new TwoDimensionalData(tdEtalon, tdRealizations);
@@ -183,7 +183,7 @@ public class IRClass
     /**
      * contain etalon and realizations for two-dimensional graphic
      */
-    private class TwoDimensionalData
+    class TwoDimensionalData
     {
         private int [] twoDimEtalon;
         private int [][] twoDimRealizations;

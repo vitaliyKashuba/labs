@@ -5,6 +5,7 @@
  */
 package berestlabs;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -12,6 +13,10 @@ import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.*;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
+import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.markers.Circle;
+import org.knowm.xchart.style.markers.Marker;
 
 /**
  *
@@ -94,14 +99,83 @@ public class BerestLabs {
             //System.out.println(examPairs.size());
             IRExamenator.exam(examPairs, true);
             
-            double[] xData = new double[] { 0.0, 1.0, 2.0 };
-            double[] yData = new double[] { 0.0, 1.0, 0.0 };
-
+            class1.convertToTwoDimensialSpace();
+            IRClass.TwoDimensionalData tdData = class1.getTwoDimensionalData();
+            
+            double[] xData = new double[tdData.getTwoDimRealizations().length];
+            double[] yData = new double[tdData.getTwoDimRealizations().length];
+            
+            //System.out.println(tdData.getTwoDimRealizations().length);
             // Create Chart
-            XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(2x)", xData, yData);
+            
+            int[][] points = tdData.getTwoDimRealizations();
+            
+            for(int i = 0; i < points.length; i ++)
+            {
+                xData[i] = points[i][0];
+                yData[i] = points[i][1];
+            }
+            
+            int[] x = {tdData.getTwoDimEtalon()[0]};
+            int[] y = {tdData.getTwoDimEtalon()[1]};
+            
+            //XYChart chart1 = QuickChart.getChart("Sample Chart", "X", "Y", "y(2x)", new double[] {120.0, 130.0}, new double []{150.0, 140.0});
+            
+            XYChart chart1 = new XYChartBuilder().width(800).height(600).build();
+            chart1.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
+            chart1.getStyler().setChartTitleVisible(false);
+            chart1.getStyler().setLegendPosition(LegendPosition.InsideSW);
+            chart1.getStyler().setMarkerSize(16);
+            //chart1.getStyler().set;
+            
+            //chart1.addSeries("null", x, y);
+            
+            XYSeries series = chart1.addSeries("class1", xData, yData);
+            series.setMarkerColor(Color.yellow);
+            
+            XYSeries series2 = chart1.addSeries("etalon1", x, y);
+            series2.setMarkerColor(Color.BLACK);
+            //chart1.addSeries("Gaussian Blob", xData, yData);
 
+            
+            
+            
+            
+            
+            class2.convertToTwoDimensialSpace();
+            IRClass.TwoDimensionalData tdData2 = class2.getTwoDimensionalData();
+            
+            double[] xData2 = new double[tdData2.getTwoDimRealizations().length];
+            double[] yData2 = new double[tdData2.getTwoDimRealizations().length];
+            
+            //System.out.println(tdData.getTwoDimRealizations().length);
+            // Create Chart
+            
+            int[][] points2 = tdData2.getTwoDimRealizations();
+            
+            for(int i = 0; i < points.length; i ++)
+            {
+                xData2[i] = points2[i][0];
+                yData2[i] = points2[i][1];
+            }
+            
+            int[] x2 = {tdData2.getTwoDimEtalon()[0]};
+            int[] y2 = {tdData2.getTwoDimEtalon()[1]};
+            
+            XYSeries series3 = chart1.addSeries("class2", xData2, yData2);
+            series3.setMarkerColor(Color.BLUE);
+            Marker circle = new Circle();
+            series3.setMarker(circle);
+            
+            System.out.println(series3.getLineStyle());
+            
+            XYSeries series4 = chart1.addSeries("etalon2", x2, y2);
+            series4.setMarkerColor(Color.DARK_GRAY);
+            
+            
+            
             // Show it
-            new SwingWrapper(chart).displayChart();
+            new SwingWrapper(chart1).displayChart();
                     
         }
     }
