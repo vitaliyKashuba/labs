@@ -8,6 +8,10 @@ package berestlabs;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
+import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.*;
+import org.knowm.xchart.SwingWrapper;
 
 /**
  *
@@ -89,6 +93,16 @@ public class BerestLabs {
 
             //System.out.println(examPairs.size());
             IRExamenator.exam(examPairs, true);
+            
+            double[] xData = new double[] { 0.0, 1.0, 2.0 };
+            double[] yData = new double[] { 3.0, 1.0, 0.0 };
+
+            // Create Chart
+            XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(2x)", xData, yData);
+
+            // Show it
+            new SwingWrapper(chart).displayChart();
+                    
         }
     }
     
