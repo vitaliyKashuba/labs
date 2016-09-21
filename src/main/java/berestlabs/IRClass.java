@@ -152,6 +152,7 @@ public class IRClass
     {
         int [] tdEtalon = new int[2];
         int [][] tdRealizations = new int[realizationsCount][2];
+        double tdRadius=0;
         
         int x1 =0, x2 = 0;
         for (int i = 0; i < attributesCount/2; i++)
@@ -177,7 +178,16 @@ public class IRClass
             tdRealizations[h][1] = x2/(attributesCount/2);
         }
         
-        twoDimensionalData = new TwoDimensionalData(tdEtalon, tdRealizations);
+        for ( int [] tdRealization : tdRealizations)
+        {
+            double newRadius = calculateDistance(tdEtalon, tdRealization);
+            if(newRadius > tdRadius)
+            {
+                tdRadius = newRadius;
+            }   
+        }
+        
+        twoDimensionalData = new TwoDimensionalData(tdEtalon, tdRealizations, tdRadius);
     }
     
     /**
@@ -187,11 +197,13 @@ public class IRClass
     {
         private int [] twoDimEtalon;
         private int [][] twoDimRealizations;
+        private double twoDimRadius;
 
-        public TwoDimensionalData(int[] twoDimEtalon, int[][] twoDimRealizations) 
+        public TwoDimensionalData(int[] twoDimEtalon, int[][] twoDimRealizations, double twoDimRadius) 
         {
             this.twoDimEtalon = twoDimEtalon;
             this.twoDimRealizations = twoDimRealizations;
+            this.twoDimRadius = twoDimRadius;
         }
 
         public int[] getTwoDimEtalon() 
@@ -202,6 +214,11 @@ public class IRClass
         public int[][] getTwoDimRealizations() 
         {
             return twoDimRealizations;
+        }
+        
+        public double getTwoDimRadius() 
+        {
+            return twoDimRadius;
         }
     
     }

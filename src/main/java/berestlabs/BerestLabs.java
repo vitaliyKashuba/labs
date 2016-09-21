@@ -159,6 +159,11 @@ public class BerestLabs {
                 yData2[i] = points2[i][1];
             }
             
+            for(int i = 0; i < xData2.length; i++)
+            {
+                System.out.println(xData2[i] + " " + yData2[i]);
+            }
+            
             int[] x2 = {tdData2.getTwoDimEtalon()[0]};
             int[] y2 = {tdData2.getTwoDimEtalon()[1]};
             
@@ -171,8 +176,28 @@ public class BerestLabs {
             
             XYSeries series4 = chart1.addSeries("etalon2", x2, y2);
             series4.setMarkerColor(Color.DARK_GRAY);
+                        
+            double tdRadius = tdData2.getTwoDimRadius();
+            //int roundCordsCount = (int)tdRadius*2;
+            int roundCordsCount = 90;
             
+            double[] xRound = new double[roundCordsCount];
+            double[] yRound = new double[roundCordsCount];
             
+            for(int i = 0; i<roundCordsCount; i++)
+            {
+                double yCord = 180 - tdRadius + i;
+                double xCord = Math.pow( (Math.pow(tdRadius, 2) -  Math.pow(yCord-y2[0], 2) ), 0.5) + x2[0];
+                
+                xRound[i] = xCord;
+                yRound[i] = yCord;
+                
+                System.out.println(xCord + " " + yCord);
+            }
+            
+            System.out.println(tdRadius);
+            
+            XYSeries seriesRound = chart1.addSeries("round", xRound, yRound);
             
             // Show it
             new SwingWrapper(chart1).displayChart();
