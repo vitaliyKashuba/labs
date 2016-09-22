@@ -197,7 +197,8 @@ public class BerestLabs {
             
             System.out.println(tdRadius);
             
-            XYSeries seriesRound = chart1.addSeries("round", xRound, yRound);
+            chart1.addSeries("round", xRound, yRound);
+            //chart1.addSeries("round2", yRound, xRound);
             
             // Show it
             new SwingWrapper(chart1).displayChart();
