@@ -17,15 +17,31 @@ public class GraphCreator
     private TreeMap<Integer, Integer> Circles; //contains coords of circles points
     private XYChart chart;
     
-    public void addIRClass()
+    /**
+     * add coords and circle-border of clas on graph
+     */
+    public void addIRClass(IRClass iRClass)
     {
-        // get coords
+        IRClass.TwoDimensionalData tdData = iRClass.getTwoDimensionalData();
+        int[] etalon = tdData.getTwoDimEtalon();
+        int[][] realizations = tdData.getTwoDimRealizations();
+        double radius = tdData.getTwoDimRadius();
+        int pointsCount = realizations.length; // make understanding of this code easier in future. useless now
         
-        // get etalon
+        double[] xData = new double[pointsCount];
+        double[] yData = new double[pointsCount];
         
-        //get radius
+        for(int i = 0; i < pointsCount; i ++)
+            {
+                xData[i] = realizations[i][0];
+                yData[i] = realizations[i][1];
+            }
         
-        //add coords and etalon in different colors but same mrker
+        int x[] = {etalon[0]}; //because addSeries can't take non-array argument
+        int y[] = {etalon[1]}; 
+        
+        chart.addSeries(iRClass.getName(), xData, yData);
+        chart.addSeries(iRClass.getName() + "etalon", x, y);
         
         addCircle();
     }
@@ -37,7 +53,7 @@ public class GraphCreator
     
     void show()
     {
-        
+        new SwingWrapper(chart).displayChart();
     }
     
     public GraphCreator()

@@ -81,6 +81,11 @@ public class IRClass
     
     public TwoDimensionalData getTwoDimensionalData()
     {
+        if (twoDimensionalData == null)
+        {
+            this.convertToTwoDimensialSpace();
+        }
+        
         return twoDimensionalData;
     }
     

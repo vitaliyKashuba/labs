@@ -55,10 +55,12 @@ public class BerestLabs {
             String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\1.bmp";
             String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\2.bmp";
             String path3 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\8\\2.bmp";
+            String path4 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\8\\1.bmp";
             
             int[][] m1 = IRUtil.imageToMatrix(IRUtil.loadImage(path));
             int[][] m2 = IRUtil.imageToMatrix(IRUtil.loadImage(path2));
             int[][] m3 = IRUtil.imageToMatrix(IRUtil.loadImage(path3));
+            int[][] m4 = IRUtil.imageToMatrix(IRUtil.loadImage(path4));
 
             IRClass class1 = new IRClass();
             class1.learn(m1, LEARNING_LIMIT);
@@ -68,6 +70,9 @@ public class BerestLabs {
 
             IRClass class3 = new IRClass();
             class3.learn(m3, LEARNING_LIMIT);
+            
+            IRClass class4 = new IRClass();
+            class4.learn(m4, LEARNING_LIMIT);
 
             System.out.println(IRClass.isIntersect(class1, class2));
 
@@ -98,6 +103,13 @@ public class BerestLabs {
 
             //System.out.println(examPairs.size());
             IRExamenator.exam(examPairs, true);
+            
+            
+            //graphics code below
+            
+            /*
+            
+            
             
             class1.convertToTwoDimensialSpace();
             IRClass.TwoDimensionalData tdData = class1.getTwoDimensionalData();
@@ -201,7 +213,18 @@ public class BerestLabs {
             //chart1.addSeries("round2", yRound, xRound);
             
             // Show it
-            new SwingWrapper(chart1).displayChart();
+            new SwingWrapper(chart1).displayChart();*/
+            
+            
+            
+            GraphCreator gc = new GraphCreator();
+            
+            gc.addIRClass(class1);
+            gc.addIRClass(class2);
+            //gc.addIRClass(class3);
+            //gc.addIRClass(class4);
+            
+            gc.show();
                     
         }
     }
