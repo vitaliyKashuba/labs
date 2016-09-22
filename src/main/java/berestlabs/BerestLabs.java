@@ -54,10 +54,10 @@ public class BerestLabs {
         
         else //debug\run-from-IDE-code
         {
-            String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\1.bmp";
-            String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\7\\2.bmp";
-            String path3 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\8\\2.bmp";
-            String path4 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\Лаб_1_варианты\\8\\1.bmp";
+            String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\7\\1.bmp";
+            String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\7\\2.bmp";
+            String path3 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\13\\1.bmp";
+            String path4 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\13\\2.bmp";
             
             int[][] m1 = IRUtil.imageToMatrix(IRUtil.loadImage(path));
             int[][] m2 = IRUtil.imageToMatrix(IRUtil.loadImage(path2));
@@ -222,9 +222,9 @@ public class BerestLabs {
             
             
             //gc.addIRClass(class1);
-            gc.addIRClass(class2);
+            //gc.addIRClass(class2);
             //gc.addIRClass(class3);
-            //gc.addIRClass(class4);
+            gc.addIRClass(class4);
             
             gc.show();
                     
