@@ -31,7 +31,7 @@ public class BerestLabs {
     
     public static void main(String[] args) throws IOException 
     {
-        
+        GraphCreator gc = new GraphCreator();
         if (args.length > 0) //run code
         {
             ArrayList<IRExamenator.ExamPair> examPairs = new ArrayList<>();
@@ -46,8 +46,10 @@ public class BerestLabs {
                 {
                     examPairs.add(new IRExamenator.ExamPair(mas[i], c));
                 }
+                gc.addIRClass(c);
             }
             IRExamenator.exam(examPairs, true);
+            gc.show();
         }
         
         else //debug\run-from-IDE-code
@@ -217,9 +219,9 @@ public class BerestLabs {
             
             
             
-            GraphCreator gc = new GraphCreator();
             
-            gc.addIRClass(class1);
+            
+            //gc.addIRClass(class1);
             gc.addIRClass(class2);
             //gc.addIRClass(class3);
             //gc.addIRClass(class4);

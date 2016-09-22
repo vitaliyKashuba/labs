@@ -12,14 +12,13 @@ import org.knowm.xchart.style.markers.Marker;
 
 /**
  * clas for creating and showing graphs
+ * works on magic
  */
 public class GraphCreator 
 {
     private TreeMap<Double, Double> circles; //contains coords of circles points
     private XYChart chart;
     private static double ROUND_PAINTER_STEP = 0.1; //used in circle points calculation
-    ArrayList<Double> xSet = new ArrayList<>();
-    ArrayList<Double> ySet = new ArrayList<>();
     
     /**
      * add coords and circle-border of clas on graph
@@ -67,9 +66,7 @@ public class GraphCreator
             xRound[i] = xCord;
             yRound[i] = yCord;
             
-            //circles.put(xCord, yCord);
-            xSet.add(xCord);
-            ySet.add(yCord);
+            circles.put(xCord, yCord);
         }
         
         halfCircleMirror(xRound, yRound);
@@ -86,9 +83,7 @@ public class GraphCreator
         for(int i = 0; i < xRound.length; i++)
         {
             xRoundMirror[i] = xRound[i] * (-1) + distanceToYAxis*2;
-            //circles.put(xRoundMirror[i], yRound[i]);
-            xSet.add(xRoundMirror[i]);
-            ySet.add(yRound[i]);
+            circles.put(xRoundMirror[i], yRound[i]);
         }
         System.out.println("here!");
     }
@@ -98,13 +93,13 @@ public class GraphCreator
      */
     private void addCirclesOnGraph()
     {
-        /*ArrayList<Double> xSet = new ArrayList<>();
+        ArrayList<Double> xSet = new ArrayList<>();
         ArrayList<Double> ySet = new ArrayList<>();
         for(double key : circles.keySet())
         {
             xSet.add(key);
             ySet.add(circles.get(key));
-        }*/
+        }
         chart.addSeries("circles", xSet, ySet);
     }
     
