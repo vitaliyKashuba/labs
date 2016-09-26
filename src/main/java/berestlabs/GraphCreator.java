@@ -20,7 +20,7 @@ public class GraphCreator
 {
     private TreeMap<Double, Double> circles; //contains coords of circles points
     private XYChart chart;
-    private static double ROUND_PAINTER_STEP = 0.1; //used in circle points calculation
+    private static double ROUND_PAINTER_STEP = 0.02; //used in circle points calculation
     
     /**
      * add coords and circle-border of clas on graph
@@ -64,7 +64,11 @@ public class GraphCreator
         {
             double yCord = firstY + step;
             double xCord = Math.pow( (Math.pow(radius, 2) -  Math.pow(yCord-center[1], 2) ), 0.5) + center[0];
-            
+            if ( (Math.pow(radius, 2) -  Math.pow(yCord-center[1], 2) ) < 0)
+            {
+                xCord = 0 + center[0];      // here can be error caused 'double' type. sqrt(-val)
+                //continue;
+            }
             xRound[i] = xCord;
             yRound[i] = yCord;
             
