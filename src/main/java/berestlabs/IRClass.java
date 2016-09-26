@@ -20,7 +20,7 @@ public class IRClass
     private int[][] realizations;
     private TwoDimensionalData twoDimensionalData;
     private int attributesCount; // etalon length, realizations width
-    private int realizationsCount; // realizations.length
+    private int realizationsCount; // realizations.length, matrix high
     
     public IRClass() 
     {
@@ -37,7 +37,13 @@ public class IRClass
         double sum = 0;
         for (int i = 0; i < vector1.length; i++)
         {
-            sum = sum + Math.pow(vector1[i]-vector2[i], 2);
+            try 
+            {
+                sum = sum + Math.pow(vector1[i]-vector2[i], 2);
+            } catch (ArrayIndexOutOfBoundsException e) //ad-hocked to avoid rebuilding of whole class. just ignore las elements
+            {
+                return Math.sqrt(sum);
+            }    
         }
         return Math.sqrt(sum);
     }
@@ -92,20 +98,34 @@ public class IRClass
     /**
      * add realizations of class, calculate etalon vector and find radius
      * @param learnMatrix matrix with realizations
-     * @param limit value of realizations to learn. should be less then learnMatrix height
+     * @param limitHeight value of realizations to learn. should be less then learnMatrix height
+     * 
+     * made to avoid code rafactoring
+     * call learn(learnMatrix, limitHeight, 0)
      */
-    public void learn(int[][] learnMatrix, int limit) throws IllegalArgumentException
+    public void learn(int[][] learnMatrix, int limitHeight)
     {
-        if (learnMatrix.length < limit)
+        learn(learnMatrix, limitHeight, 0);
+    }
+    
+    /**
+     * add realizations of class, calculate etalon vector and find radius
+     * @param learnMatrix matrix with realizations
+     * @param limitHeight value of realizations to learn. should be less then learnMatrix height
+     * @param limitWidth value of attributes that should be unlearned
+     */
+    public void learn(int[][] learnMatrix, int limitHeight, int limitWidth) throws IllegalArgumentException
+    {
+        if (learnMatrix.length < limitHeight)
         {
             throw new IllegalArgumentException("param limit should be <"+learnMatrix.length);
         }
         
         int width = learnMatrix[0].length;
-        realizations = new int[limit][width];
-        for (int i = 0; i < limit; i++)
+        realizations = new int[limitHeight][width - limitWidth];
+        for (int i = 0; i < limitHeight; i++)
         {
-            for (int j = 0; j < width; j ++)
+            for (int j = 0; j < width - limitWidth; j ++)
             {
                 realizations[i][j] = learnMatrix[i][j];
             }

@@ -18,10 +18,12 @@ public class IRExamenator
     /**
      * exam clases and show statictics
      * 
+     * @return effectivenes of recognition
+     * 
      * @param testMaterial ArrayList with pairs vector-expected class
      * @param log 'true' to print info on console
      */
-    public void exam(ArrayList<ExamPair> testMaterial, boolean log)
+    public double exam(ArrayList<ExamPair> testMaterial, boolean log)
     {
         int sucessCount = 0;
         int failCount = 0;
@@ -40,6 +42,8 @@ public class IRExamenator
         
         System.out.println("Exam finished");
         System.out.println(sucessCount + " recognized correctly, " + failCount + " recognized wrong");
+        
+        return (double)sucessCount/(sucessCount+failCount)*100;
     }
     
     /**
