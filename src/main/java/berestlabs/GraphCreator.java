@@ -1,5 +1,6 @@
 package berestlabs;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import org.knowm.xchart.XYChart;
@@ -9,6 +10,7 @@ import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.markers.Circle;
 import org.knowm.xchart.style.markers.Marker;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * clas for creating and showing graphs
@@ -18,7 +20,7 @@ public class GraphCreator
 {
     private TreeMap<Double, Double> circles; //contains coords of circles points
     private XYChart chart;
-    private static double ROUND_PAINTER_STEP = 0.5; //used in circle points calculation
+    private static double ROUND_PAINTER_STEP = 0.1; //used in circle points calculation
     
     /**
      * add coords and circle-border of clas on graph
@@ -94,12 +96,19 @@ public class GraphCreator
     {
         ArrayList<Double> xSet = new ArrayList<>();
         ArrayList<Double> ySet = new ArrayList<>();
+        ArrayList<Double> szSet = new ArrayList<>(); // the worst realization for size select. never use this lib
         for(double key : circles.keySet())
         {
             xSet.add(key);
             ySet.add(circles.get(key));
+            szSet.add(0.5);
         }
-        chart.addSeries("circles", xSet, ySet);
+        XYSeries series = chart.addSeries("circles", xSet, ySet, szSet);
+        series.setMarkerColor(Color.BLACK);
+        //Marker circle = new Circle();
+        //series.setMarker(circle);
+        series.setMarker(SeriesMarkers.CIRCLE);
+        
     }
     
     void show()
@@ -114,7 +123,7 @@ public class GraphCreator
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
         chart.getStyler().setChartTitleVisible(false);
         chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
-        chart.getStyler().setMarkerSize(16);
+        chart.getStyler().setMarkerSize(20);
         
         circles = new TreeMap<>();
     }

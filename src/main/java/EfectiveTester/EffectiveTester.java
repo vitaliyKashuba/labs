@@ -100,13 +100,13 @@ public class EffectiveTester
         {
             double efect = test(args, classCount, 0, LEARNING_LIMIT);
             System.out.println("Class count = " + classCount + " effectiveness = " + efect);
-            classCount++;
             
             if (writeToXML)
             {
                 writeToSheet(sheet, rw, classCount, efect);
                 rw++;
             }
+            classCount++;
         }
     }
     
