@@ -23,12 +23,20 @@ public class IRClass
     private int attributesCount; // etalon length, realizations width
     private int realizationsCount; // realizations.length, matrix high
     
+    private IRClass nextLevelClass;
+    private int level;
     
+    public IRClass(String name ,int level) 
+    {
+        setName("[level"+level+"]"+name);
+        this.level = level;
+    }
     
     public IRClass() 
     {
         setName("class"+CLASSCOUNT);
         CLASSCOUNT++;
+        level = 0;
     }
     
     /**
@@ -88,6 +96,11 @@ public class IRClass
         return etalonVector;
     }
     
+    public IRClass getNextLevelClass()
+    {
+        return nextLevelClass;
+    }
+    
     public TwoDimensionalData getTwoDimensionalData()
     {
         if (twoDimensionalData == null)
@@ -96,6 +109,57 @@ public class IRClass
         }
         
         return twoDimensionalData;
+    }
+    
+        /**
+     * separate realizationt that lies on intersect of classes
+     * create new IRClass inside with own etalon
+     * @param classes intersect classes that should be separated
+     */
+    public void deepLearn(ArrayList<IRClass> classes)
+    {
+        ArrayList<int[]> intersectVectors = new ArrayList<>();
+        
+        for (int[] vector : realizations)
+        {
+            for(IRClass cl : classes)
+            {
+                if (cl!=this) // to not separate own realizations
+                {
+                    if (calculateDistance(vector, cl.getEtalonVector()) < cl.getRadius())
+                    {
+                        intersectVectors.add(vector);
+                    }
+                }
+            }
+        }
+        
+        /*if(intersectVectors.size()<3)
+        {
+            return;
+        }*/
+        
+        nextLevelClass = new IRClass(name, this.level+1);
+        nextLevelClass.learn(intersectVectors);  
+        
+        /*ArrayList<IRClass> nextLevelClasses = new ArrayList<>();
+        for (IRClass c : classes)
+        {
+            
+        }*/
+        
+        //deepLearn(classes);
+    }
+    
+    public void learn(ArrayList<int[]> rlz)
+    {
+        int[][] rArray = new int[rlz.size()][rlz.get(0).length];
+        for(int i = 0; i < rlz.size(); i++)
+        {
+            System.arraycopy(rlz.get(i), 0, rArray[i], 0, rlz.get(i).length);
+        }
+        
+        learn(rArray, rArray.length);
     }
     
     /**
@@ -139,32 +203,6 @@ public class IRClass
         
         attributesCount = etalonVector.length;
         realizationsCount = realizations.length;
-    }
-    
-    /**
-     * separate realizationt that lies on intersect of classes
-     * create new IRClass inside with own etalon
-     * @param classes intersect classes that should be separated
-     */
-    public void deepLearn(ArrayList<IRClass> classes)
-    {
-        ArrayList<int[]> intersectVectors = new ArrayList<>();
-        
-        for (int[] vector : realizations)
-        {
-            for(IRClass cl : classes)
-            {
-                if (cl!=this) // to not separate own realizations
-                {
-                    if (calculateDistance(vector, cl.getEtalonVector()) < cl.getRadius())
-                    {
-                        intersectVectors.add(vector);
-                    }
-                }
-            }
-        }
-        
-        
     }
     
     private void calculateEtalon()
