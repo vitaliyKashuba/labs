@@ -41,7 +41,7 @@ public class EffectiveTester
             
     }
     
-    static void writeToSheet(Sheet sheet, int rownum, String val1, String val2)
+    static void writeToSheet(Sheet sheet, int rownum, int val1, double val2)
     {
         Row row = sheet.createRow(rownum); 
         Cell rl = row.createCell(0);
@@ -64,7 +64,7 @@ public class EffectiveTester
             
             if (writeToXML)
             {
-                writeToSheet(sheet, rw, String.valueOf(realizationLimit), String.valueOf(effect));
+                writeToSheet(sheet, rw, realizationLimit, effect);
                 rw++;
             }
         }
@@ -84,7 +84,7 @@ public class EffectiveTester
             
             if (writeToXML)
             {
-                writeToSheet(sheet, rw, String.valueOf(100-ignoreAttributes), String.valueOf(efect));
+                writeToSheet(sheet, rw, (100-ignoreAttributes), efect);
                 rw++;
             }
         }
@@ -104,7 +104,7 @@ public class EffectiveTester
             
             if (writeToXML)
             {
-                writeToSheet(sheet, rw, String.valueOf(classCount), String.valueOf(efect));
+                writeToSheet(sheet, rw, classCount, efect);
                 rw++;
             }
         }
