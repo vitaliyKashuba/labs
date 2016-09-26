@@ -18,7 +18,7 @@ public class GraphCreator
 {
     private TreeMap<Double, Double> circles; //contains coords of circles points
     private XYChart chart;
-    private static double ROUND_PAINTER_STEP = 5.0; //used in circle points calculation
+    private static double ROUND_PAINTER_STEP = 0.5; //used in circle points calculation
     
     /**
      * add coords and circle-border of clas on graph
@@ -85,7 +85,6 @@ public class GraphCreator
             xRoundMirror[i] = xRound[i] * (-1) + distanceToYAxis*2;
             circles.put(xRoundMirror[i], yRound[i]);
         }
-        System.out.println("here!");
     }
     
     /**

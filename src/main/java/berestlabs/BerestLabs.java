@@ -27,11 +27,12 @@ public class BerestLabs {
     /**
      * @param args the command line arguments
      */
-    public static int LEARNING_LIMIT = 80;
+    public static int LEARNING_LIMIT = 10;
     
     public static void main(String[] args) throws IOException 
     {
         GraphCreator gc = new GraphCreator();
+
         if (args.length > 0) //run code
         {
             ArrayList<IRExamenator.ExamPair> examPairs = new ArrayList<>();
@@ -49,6 +50,7 @@ public class BerestLabs {
                 gc.addIRClass(c);
             }
             IRExamenator.exam(examPairs, true);
+            
             gc.show();
         }
         
@@ -221,10 +223,10 @@ public class BerestLabs {
             
             
             
-            //gc.addIRClass(class1);
-            //gc.addIRClass(class2);
+            gc.addIRClass(class1);
+            gc.addIRClass(class2);
             //gc.addIRClass(class3);
-            gc.addIRClass(class4);
+            //gc.addIRClass(class4);
             
             gc.show();
                     

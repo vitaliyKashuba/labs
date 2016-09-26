@@ -10,6 +10,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
 /**
  * Utility functions for Image Recognition
@@ -45,5 +48,12 @@ public class IRUtil
            }
         }
         return matrix;
+    }
+    
+    public static void writeToXml(String xmlName)
+    {
+        Workbook book = new HSSFWorkbook();
+        Sheet sheet = book.createSheet("1");
+        
     }
 }
