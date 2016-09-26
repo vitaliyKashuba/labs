@@ -1,5 +1,6 @@
 package EfectiveTester;
 
+import berestlabs.IRClass;
 import java.io.IOException;
 
 /**
@@ -12,18 +13,20 @@ public class EffectiveTester
         //berestlabs.BerestLabs.main(args);
     }
     
-    void testByAttribute()
+    void testByAttribute(String[] args)
+    {
+        IRClass c1 = new IRClass();
+        IRClass c2 = new IRClass();
+    }
+    
+    void testByRealizations(String[] args)
     {
         
     }
     
-    void testByRealizations()
+    void testByClasses(String[] args)
     {
         
     }
     
-    void testByClasses()
-    {
-        
-    }
 }

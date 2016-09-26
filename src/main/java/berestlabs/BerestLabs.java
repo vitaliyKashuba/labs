@@ -32,6 +32,7 @@ public class BerestLabs {
     public static void main(String[] args) throws IOException 
     {
         GraphCreator gc = new GraphCreator();
+        IRExamenator examenator = new IRExamenator();
         if (args.length > 0) //run code
         {
             ArrayList<IRExamenator.ExamPair> examPairs = new ArrayList<>();
@@ -40,7 +41,7 @@ public class BerestLabs {
                 int[][] mas = IRUtil.imageToMatrix(IRUtil.loadImage(path));
                 IRClass c = new IRClass();
                 c.learn(mas, LEARNING_LIMIT);
-                IRExamenator.addExamClass(c);
+                examenator.addExamClass(c);
                 
                 for (int i = LEARNING_LIMIT; i < mas.length; i++)
                 {
@@ -48,7 +49,7 @@ public class BerestLabs {
                 }
                 gc.addIRClass(c);
             }
-            IRExamenator.exam(examPairs, true);
+            examenator.exam(examPairs, true);
             gc.show();
         }
         
@@ -78,9 +79,9 @@ public class BerestLabs {
 
             System.out.println(IRClass.isIntersect(class1, class2));
 
-            IRExamenator.addExamClass(class2);
-            IRExamenator.addExamClass(class1);
-            IRExamenator.addExamClass(class3);
+            examenator.addExamClass(class2);
+            examenator.addExamClass(class1);
+            examenator.addExamClass(class3);
 
             //IRExamenator.test(class1.getEtalonVector(), class1, true);
 
@@ -104,7 +105,7 @@ public class BerestLabs {
             }
 
             //System.out.println(examPairs.size());
-            IRExamenator.exam(examPairs, true);
+            examenator.exam(examPairs, true);
             
             
             //graphics code below

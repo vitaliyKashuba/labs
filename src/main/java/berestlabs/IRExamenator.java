@@ -8,9 +8,9 @@ import java.util.Map;
  */
 public class IRExamenator 
 {
-    private static ArrayList<IRClass> EXAM_CLASSES = new ArrayList<>();
+    private ArrayList<IRClass> EXAM_CLASSES = new ArrayList<>();
     
-    public static void addExamClass(IRClass c)
+    public void addExamClass(IRClass c)
     {
         EXAM_CLASSES.add(c);
     }
@@ -21,7 +21,7 @@ public class IRExamenator
      * @param testMaterial ArrayList with pairs vector-expected class
      * @param log 'true' to print info on console
      */
-    public static void exam(ArrayList<ExamPair> testMaterial, boolean log)
+    public void exam(ArrayList<ExamPair> testMaterial, boolean log)
     {
         int sucessCount = 0;
         int failCount = 0;
@@ -50,7 +50,7 @@ public class IRExamenator
      * @param log 'true' to print info on console
      * @return true if result of recognition is same to expected result
      */
-    public static boolean test(int [] realization, IRClass expectedClass, boolean log) 
+    public boolean test(int [] realization, IRClass expectedClass, boolean log) 
     {
         IRClass recognized = recognize(realization);
         boolean isRcnz;
@@ -76,7 +76,7 @@ public class IRExamenator
      * try to recognize class
      * @param realization vector of class realization
      */
-    public static IRClass recognize(int [] realization)
+    public IRClass recognize(int [] realization)
     {
         double minDistance = Integer.MAX_VALUE;
         IRClass recognizedClass = null; // chang to IRClass ?
