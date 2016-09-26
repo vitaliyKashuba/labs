@@ -117,7 +117,7 @@ public class GraphCreator
     
     void show()
     {
-        addCirclesOnGraph();
+        //addCirclesOnGraph();
         new SwingWrapper(chart).displayChart();
     }
     
@@ -127,7 +127,7 @@ public class GraphCreator
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
         chart.getStyler().setChartTitleVisible(false);
         chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
-        chart.getStyler().setMarkerSize(20);
+        chart.getStyler().setMarkerSize(10);
         
         circles = new TreeMap<>();
     }

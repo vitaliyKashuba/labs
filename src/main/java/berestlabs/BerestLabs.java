@@ -224,8 +224,15 @@ public class BerestLabs {
             
             gc.addIRClass(class1);
             gc.addIRClass(class2);
-            //gc.addIRClass(class3);
+            gc.addIRClass(class3);
             //gc.addIRClass(class4);
+            
+            ArrayList<IRClass> classes = new ArrayList<>();
+            classes.add(class1);
+            classes.add(class2);
+            classes.add(class3);
+            
+            class1.deepLearn(classes);
             
             gc.show();
                     

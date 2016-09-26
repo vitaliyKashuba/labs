@@ -6,6 +6,7 @@
 package berestlabs;
 
 import java.awt.List;
+import java.util.ArrayList;
 
 /**
  * Image Recognition class
@@ -21,6 +22,8 @@ public class IRClass
     private TwoDimensionalData twoDimensionalData;
     private int attributesCount; // etalon length, realizations width
     private int realizationsCount; // realizations.length, matrix high
+    
+    
     
     public IRClass() 
     {
@@ -136,6 +139,32 @@ public class IRClass
         
         attributesCount = etalonVector.length;
         realizationsCount = realizations.length;
+    }
+    
+    /**
+     * separate realizationt that lies on intersect of classes
+     * create new IRClass inside with own etalon
+     * @param classes intersect classes that should be separated
+     */
+    public void deepLearn(ArrayList<IRClass> classes)
+    {
+        ArrayList<int[]> intersectVectors = new ArrayList<>();
+        
+        for (int[] vector : realizations)
+        {
+            for(IRClass cl : classes)
+            {
+                if (cl!=this) // to not separate own realizations
+                {
+                    if (calculateDistance(vector, cl.getEtalonVector()) < cl.getRadius())
+                    {
+                        intersectVectors.add(vector);
+                    }
+                }
+            }
+        }
+        
+        
     }
     
     private void calculateEtalon()
