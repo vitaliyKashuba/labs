@@ -28,11 +28,32 @@ public class BerestLabs {
      * @param args the command line arguments
      */
     public static int LEARNING_LIMIT = 80;
+    static int LEVELS = 0;
+    
+    /**
+     * create next-level classes within each class from classes
+     * re-run itself until exception throws  //should be another quit condition?
+     * @param classes 
+     */
+    static void deepLearn(ArrayList<IRClass> classes, GraphCreator gc)
+    {
+        ArrayList<IRClass> nextLevelClases = new ArrayList<>();
+        for(IRClass cl : classes)
+        {
+            cl.deepLearn(classes);
+            nextLevelClases.add(cl.getNextLevelClass());
+            gc.addIRClass(cl.getNextLevelClass());
+        }
+        //System.out.println("next level");
+        LEVELS++;
+        deepLearn(nextLevelClases, gc);
+    }
     
     public static void main(String[] args) throws IOException 
     {
         GraphCreator gc = new GraphCreator();
         IRExamenator examenator = new IRExamenator();
+        ArrayList<IRClass> classes = new ArrayList<>();
         if (args.length > 0) //run code
         {
             ArrayList<IRExamenator.ExamPair> examPairs = new ArrayList<>();
@@ -48,10 +69,37 @@ public class BerestLabs {
                     examPairs.add(new IRExamenator.ExamPair(mas[i], c));
                 }
                 gc.addIRClass(c);
+                classes.add(c);
+            }  //class learning cycle
+            
+            //here begins the deep learning
+            
+            
+            /*ArrayList<IRClass> nextLevelClases = new ArrayList<>();
+            for(IRClass cl : classes)
+            {
+                cl.deepLearn(classes);
+                nextLevelClases.add(cl.getNextLevelClass());
+                gc.addIRClass(cl.getNextLevelClass());
             }
+            System.out.println("next level");*/
+            
+            try 
+            {
+               deepLearn(classes, gc);
+            } catch (Exception e) 
+            {
+                System.out.println("learning finished, levels " + LEVELS);
+            }
+            
+            
+            //deep learning end
+            
             examenator.exam(examPairs, true);
-            gc.show();
-        }
+            gc.show();  
+            
+            
+        }  //end of run code
         
         else //debug\run-from-IDE-code
         {
@@ -227,13 +275,13 @@ public class BerestLabs {
             //gc.addIRClass(class3);
             //gc.addIRClass(class4);
             
-            ArrayList<IRClass> classes = new ArrayList<>();
-            classes.add(class1);
-            classes.add(class2);
+            ArrayList<IRClass> iclasses = new ArrayList<>();
+            iclasses.add(class1);
+            iclasses.add(class2);
             //classes.add(class3);
             
-            class1.deepLearn(classes);
-            class2.deepLearn(classes);
+            class1.deepLearn(iclasses);
+            class2.deepLearn(iclasses);
             
             IRClass level2c1 = class1.getNextLevelClass();
             IRClass level2c2 = class2.getNextLevelClass();
