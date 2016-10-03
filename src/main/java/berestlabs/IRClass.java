@@ -40,6 +40,32 @@ public class IRClass
     }
     
     /**
+     * check, is vector belong to more then one class from list
+     * @param vector
+     * @param classes
+     * @return 
+     */
+    public static boolean liesOnIntersect(int[] vector, ArrayList<IRClass> classes)
+    {
+        int entryCount = 0;
+        for (IRClass c : classes)
+        {
+            if (calculateDistance(vector, c.getEtalonVector()) < c.getRadius())
+            {
+                entryCount++;
+            }
+        }
+        if (entryCount>1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
      * calculate distance between two vectors
      * @return distance
      */
@@ -63,7 +89,7 @@ public class IRClass
      * check is classes are intersect
      * @return 
      */
-    public static boolean isIntersect(IRClass class1, IRClass class2)
+   /* public static boolean isIntersect(IRClass class1, IRClass class2)
     {
         if (calculateDistance(class1.getEtalonVector(), class2.getEtalonVector()) > class1.getRadius()+class2.getRadius())
         {
@@ -74,7 +100,7 @@ public class IRClass
             //System.out.println("r2 " + class1.getRadius() + " r2 " + class2.getRadius() + " dist " + calculateDistance(class1.getEtalonVector(), class2.getEtalonVector()) + " ");
             return true;
         }
-    }
+    }*/
     
     public void setName(String name)
     {

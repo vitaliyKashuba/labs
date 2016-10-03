@@ -42,7 +42,7 @@ public class BerestLabs {
         {
             cl.deepLearn(classes);
             nextLevelClases.add(cl.getNextLevelClass());
-            gc.addIRClass(cl.getNextLevelClass());
+            //gc.addIRClass(cl.getNextLevelClass());
         }
         //System.out.println("next level");
         LEVELS++;
@@ -96,6 +96,14 @@ public class BerestLabs {
             //deep learning end
             
             examenator.exam(examPairs, true);
+            try 
+            {
+                examenator.deepExam(examPairs, classes, true);
+            } catch (Exception e) 
+            {
+                System.out.println("deep exam finished");
+            }
+            System.out.println(examenator.getDEEP_EXAM_SUCCESS_COUNT() + " recognized wright, " + examenator.getDEEP_EXAM_FAIL_COUNT() + " recognized wrong");
             gc.show();  
             
             

@@ -8,11 +8,69 @@ import java.util.Map;
  */
 public class IRExamenator 
 {
+    private int DEEP_EXAM_LEVELS_COUNT = 0;
+    private int DEEP_EXAM_SUCCESS_COUNT = 0;
+    private int DEEP_EXAM_FAIL_COUNT = 0;
     private ArrayList<IRClass> EXAM_CLASSES = new ArrayList<>();
+
+    public int getDEEP_EXAM_FAIL_COUNT() 
+    {
+        return DEEP_EXAM_FAIL_COUNT;
+    }
+
+    public int getDEEP_EXAM_SUCCESS_COUNT() 
+    {
+        return DEEP_EXAM_SUCCESS_COUNT;
+    }
     
     public void addExamClass(IRClass c)
     {
         EXAM_CLASSES.add(c);
+    }
+    
+    /**
+     * exam classes by levels
+     * @param testMaterial
+     * @param classes 
+     */
+    public void deepExam(ArrayList<ExamPair> testMaterial, ArrayList<IRClass> classes, boolean log)
+    {
+        int successCount = 0;
+        int failCount = 0;
+        ArrayList<ExamPair> nextLevelMaterial = new ArrayList<>();
+        ArrayList<IRClass> nextLevelClasses = new ArrayList<>();
+        
+        for (ExamPair pair : testMaterial)
+        {
+            if (IRClass.liesOnIntersect(pair.getVector(), classes))
+            {
+                nextLevelMaterial.add(pair);
+            }
+            else
+            {
+                boolean result = test(pair.getVector(), pair.getExpectedClass(), true);
+                if(result)
+                {
+                    DEEP_EXAM_SUCCESS_COUNT++;
+                }
+                else
+                {
+                    DEEP_EXAM_FAIL_COUNT++;
+                }
+            }
+        }
+        
+        for(IRClass cls : classes)
+        {
+            nextLevelClasses.add(cls.getNextLevelClass());
+        }
+        
+        if (log)
+        {
+            System.out.println("level" +DEEP_EXAM_LEVELS_COUNT + " success "+ successCount + " fail " + failCount);
+        }
+        DEEP_EXAM_LEVELS_COUNT++;
+        deepExam(nextLevelMaterial, nextLevelClasses, log);
     }
     
     /**
