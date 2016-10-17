@@ -88,23 +88,6 @@ public class IRClass
         return Math.sqrt(sum);
     }
 
-
-    /**
-     * check is classes are intersect
-     * @return 
-     */
-    /* public static boolean isIntersect(IRClass class1, IRClass class2)
-    {
-    if (calculateDistance(class1.getEtalonVector(), class2.getEtalonVector()) > class1.getRadius()+class2.getRadius())
-    {
-    return false;
-    }
-    else
-    {
-    //System.out.println("r2 " + class1.getRadius() + " r2 " + class2.getRadius() + " dist " + calculateDistance(class1.getEtalonVector(), class2.getEtalonVector()) + " ");
-    return true;
-    }
-    }*/
     public void setBasicName(String basicName) 
     {
         this.basicName = basicName;
