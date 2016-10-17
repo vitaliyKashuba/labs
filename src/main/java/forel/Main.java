@@ -2,6 +2,8 @@ package forel;
 
 import java.util.ArrayList;
 import java.util.Random;
+import berestlabs.GraphCreator;
+import berestlabs.IRClass;
 
 public class Main
 {  
@@ -22,5 +24,27 @@ public class Main
         {
             System.out.println(points.get(i)[0] + " " + points.get(i)[1]);
         }
+        
+        FORELClass baseClass = new FORELClass();
+        baseClass.learn(points);
+        
+        GraphCreator gc = new GraphCreator();
+        gc.addIRClass(baseClass);
+        //gc.show();
+        
+        System.out.println(baseClass.getRadius());
+        
+        int[] c = baseClass.selectNewCenter();
+        double r = baseClass.calculateNewRadius();
+        ArrayList<int[]> tx1 = baseClass.calculateTaxone(c);
+        
+        IRClass taxone1 = new IRClass();
+        taxone1.learn(tx1);
+        
+        gc.addIRClass(taxone1);
+        
+        gc.show();
+        
     }
+    
 }

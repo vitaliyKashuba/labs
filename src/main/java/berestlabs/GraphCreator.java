@@ -115,7 +115,7 @@ public class GraphCreator
         
     }
     
-    void show()
+    public void show()
     {
         addCirclesOnGraph();
         new SwingWrapper(chart).displayChart();
