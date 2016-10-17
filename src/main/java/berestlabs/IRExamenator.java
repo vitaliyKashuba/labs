@@ -35,8 +35,6 @@ public class IRExamenator
      */
     public void deepExam(ArrayList<ExamPair> testMaterial, ArrayList<IRClass> classes, boolean log)
     {
-        int successCount = 0;
-        int failCount = 0;
         ArrayList<ExamPair> nextLevelMaterial = new ArrayList<>();
         ArrayList<IRClass> nextLevelClasses = new ArrayList<>();
         
@@ -44,11 +42,11 @@ public class IRExamenator
         {
             if (IRClass.liesOnIntersect(pair.getVector(), classes))
             {
-                nextLevelMaterial.add(pair);
+                nextLevelMaterial.add(new ExamPair(pair.getVector(), pair.getExpectedClass().getNextLevelClass()));
             }
             else
             {
-                boolean result = test(pair.getVector(), pair.getExpectedClass(), true);
+                boolean result = test(pair.getVector(), pair.getExpectedClass(), true, classes);
                 if(result)
                 {
                     DEEP_EXAM_SUCCESS_COUNT++;
@@ -67,7 +65,7 @@ public class IRExamenator
         
         if (log)
         {
-            System.out.println("level" +DEEP_EXAM_LEVELS_COUNT + " success "+ successCount + " fail " + failCount);
+            System.out.println("level" +DEEP_EXAM_LEVELS_COUNT + " success "+ DEEP_EXAM_SUCCESS_COUNT + " fail " + DEEP_EXAM_FAIL_COUNT);
         }
         DEEP_EXAM_LEVELS_COUNT++;
         deepExam(nextLevelMaterial, nextLevelClasses, log);
@@ -112,9 +110,9 @@ public class IRExamenator
      * @param log 'true' to print info on console
      * @return true if result of recognition is same to expected result
      */
-    public boolean test(int [] realization, IRClass expectedClass, boolean log) 
+    public boolean test(int [] realization, IRClass expectedClass, boolean log, ArrayList<IRClass> examClasses) 
     {
-        IRClass recognized = recognize(realization);
+        IRClass recognized = recognize(realization, examClasses);
         boolean isRcnz;
         
         if (recognized.equals(expectedClass))
@@ -134,19 +132,24 @@ public class IRExamenator
         return isRcnz;
     }
     
+    public boolean test (int [] realization, IRClass expectedClass, boolean log)
+    {
+        return test(realization, expectedClass, log, EXAM_CLASSES);
+    }
+    
     /**
      * try to recognize class
      * @param realization vector of class realization
      */
-    public IRClass recognize(int [] realization)
+    public IRClass recognize(int [] realization, ArrayList<IRClass> examClasses)
     {
         double minDistance = Integer.MAX_VALUE;
         IRClass recognizedClass = null; // chang to IRClass ?
         
-        for (IRClass examinee : EXAM_CLASSES)
+        for (IRClass examinee : examClasses)
         {
             double dst = IRClass.calculateDistance(realization, examinee.getEtalonVector());
-            if (dst < minDistance)
+            if (dst < minDistance && IRClass.calculateDistance(realization, examinee.getEtalonVector())<examinee.getRadius())
             {
                 minDistance = dst;
                 recognizedClass = examinee; // should be cloned?
@@ -154,6 +157,11 @@ public class IRExamenator
         }
         
         return recognizedClass;
+    }
+    
+    public IRClass recognize(int [] realization)
+    {
+        return recognize(realization, EXAM_CLASSES);
     }
     
     /**

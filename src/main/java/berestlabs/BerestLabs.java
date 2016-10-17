@@ -35,18 +35,18 @@ public class BerestLabs {
      * re-run itself until exception throws  //should be another quit condition?
      * @param classes 
      */
-    static void deepLearn(ArrayList<IRClass> classes, GraphCreator gc)
+    static void deepLearnStatic(ArrayList<IRClass> classes, GraphCreator gc)
     {
         ArrayList<IRClass> nextLevelClases = new ArrayList<>();
         for(IRClass cl : classes)
         {
             cl.deepLearn(classes);
             nextLevelClases.add(cl.getNextLevelClass());
-            //gc.addIRClass(cl.getNextLevelClass());
+            gc.addIRClass(cl.getNextLevelClass());
         }
         //System.out.println("next level");
         LEVELS++;
-        deepLearn(nextLevelClases, gc);
+        deepLearnStatic(nextLevelClases, gc);
     }
     
     public static void main(String[] args) throws IOException 
@@ -74,19 +74,9 @@ public class BerestLabs {
             
             //here begins the deep learning
             
-            
-            /*ArrayList<IRClass> nextLevelClases = new ArrayList<>();
-            for(IRClass cl : classes)
-            {
-                cl.deepLearn(classes);
-                nextLevelClases.add(cl.getNextLevelClass());
-                gc.addIRClass(cl.getNextLevelClass());
-            }
-            System.out.println("next level");*/
-            
             try 
             {
-               deepLearn(classes, gc);
+               deepLearnStatic(classes, gc);
             } catch (Exception e) 
             {
                 System.out.println("learning finished, levels " + LEVELS);
@@ -96,6 +86,8 @@ public class BerestLabs {
             //deep learning end
             
             examenator.exam(examPairs, true);
+            
+            
             try 
             {
                 examenator.deepExam(examPairs, classes, true);
@@ -104,7 +96,7 @@ public class BerestLabs {
                 System.out.println("deep exam finished");
             }
             System.out.println(examenator.getDEEP_EXAM_SUCCESS_COUNT() + " recognized wright, " + examenator.getDEEP_EXAM_FAIL_COUNT() + " recognized wrong");
-            gc.show();  
+            //gc.show();  
             
             
         }  //end of run code
@@ -133,7 +125,7 @@ public class BerestLabs {
             IRClass class4 = new IRClass();
             class4.learn(m4, LEARNING_LIMIT);
 
-            System.out.println(IRClass.isIntersect(class1, class2));
+            //System.out.println(IRClass.isIntersect(class1, class2));
 
             examenator.addExamClass(class2);
             examenator.addExamClass(class1);

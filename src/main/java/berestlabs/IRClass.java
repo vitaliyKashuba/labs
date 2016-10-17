@@ -16,6 +16,7 @@ public class IRClass
     static int CLASSCOUNT=0;
     
     private String name;
+    private String basicName;
     private double radius;
     private int[] etalonVector;
     private int[][] realizations;
@@ -26,15 +27,17 @@ public class IRClass
     private IRClass nextLevelClass;
     private int level;
     
-    public IRClass(String name ,int level) 
+    public IRClass(String basicName ,int level) 
     {
-        setName("[level"+level+"]"+name);
+        setName("[level"+level+"]"+basicName);
+        setBasicName(basicName);
         this.level = level;
     }
     
     public IRClass() 
     {
         setName("class"+CLASSCOUNT);
+        setBasicName(this.getName());
         CLASSCOUNT++;
         level = 0;
     }
@@ -55,7 +58,7 @@ public class IRClass
                 entryCount++;
             }
         }
-        if (entryCount>1)
+        if (entryCount>1)//1?
         {
             return true;
         }
@@ -84,25 +87,35 @@ public class IRClass
         }
         return Math.sqrt(sum);
     }
-    
+
+
     /**
      * check is classes are intersect
      * @return 
      */
-   /* public static boolean isIntersect(IRClass class1, IRClass class2)
+    /* public static boolean isIntersect(IRClass class1, IRClass class2)
     {
-        if (calculateDistance(class1.getEtalonVector(), class2.getEtalonVector()) > class1.getRadius()+class2.getRadius())
-        {
-            return false;
-        }
-        else
-        {
-            //System.out.println("r2 " + class1.getRadius() + " r2 " + class2.getRadius() + " dist " + calculateDistance(class1.getEtalonVector(), class2.getEtalonVector()) + " ");
-            return true;
-        }
+    if (calculateDistance(class1.getEtalonVector(), class2.getEtalonVector()) > class1.getRadius()+class2.getRadius())
+    {
+    return false;
+    }
+    else
+    {
+    //System.out.println("r2 " + class1.getRadius() + " r2 " + class2.getRadius() + " dist " + calculateDistance(class1.getEtalonVector(), class2.getEtalonVector()) + " ");
+    return true;
+    }
     }*/
+    public void setBasicName(String basicName) 
+    {
+        this.basicName = basicName;
+    }
     
-    public void setName(String name)
+    public String getBasicName()
+    {
+        return basicName;
+    }
+
+    public void setName(String name) 
     {
         this.name = name;
     }
@@ -165,7 +178,7 @@ public class IRClass
             return;
         }*/
         
-        nextLevelClass = new IRClass(name, this.level+1);
+        nextLevelClass = new IRClass(this.basicName, this.level+1);
         nextLevelClass.learn(intersectVectors);  
         
         /*ArrayList<IRClass> nextLevelClasses = new ArrayList<>();
