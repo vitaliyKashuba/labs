@@ -9,6 +9,10 @@ public class Main
 {  
     static GraphCreator gc = new GraphCreator();
     
+    /**
+     * call itself untill taxone found or last class element shoulb out of taxone
+     * @param baseClass 
+     */
     static void findTaxone(FORELClass baseClass)
     {
         FORELClass subclass = new FORELClass();
@@ -19,7 +23,7 @@ public class Main
         
         gc.addIRClass(baseClass);
         
-        if(baseClass.isSame())
+        if(baseClass.isTaxoneCalculated())
         {
             System.out.println("same");
             return;
@@ -31,8 +35,10 @@ public class Main
             try
             {
                 findTaxone(subclass);
-            } catch (Exception e)
+            } 
+            catch (Exception e) // can fail for last elements of base class
             {
+                System.out.println("can't calculate taxone");
                 return;
             }   
         }

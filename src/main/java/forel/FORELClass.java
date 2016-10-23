@@ -28,6 +28,10 @@ public class FORELClass extends IRClass
         return points.get(FORELUtil.generateNumber(0, points.size()));
     }
     
+    /**
+     * !! should be called from taxone creation method, because by default radius calculated from rlz points
+     * @param radius 
+     */
     void setRadius(double radius)
     {
         this.radius = radius;
@@ -52,7 +56,12 @@ public class FORELClass extends IRClass
         return (ArrayList<int[]>)taxonePoints.clone();
     }
     
-    public boolean isSame()
+    /**
+     * used to stop recursive taxon extraction
+     * if base class points is same with taxon points -> taxon extracted
+     * @return 
+     */
+    public boolean isTaxoneCalculated()
     {
         System.out.println("p " + points.size() + "tx " + taxonePoints.size());
         if (points.size() == taxonePoints.size())
