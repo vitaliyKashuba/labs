@@ -5,7 +5,8 @@ import java.util.Random;
 
 public class FORELUtil
 {
-    static Random random = new Random(System.currentTimeMillis());
+    static Random random = new Random(System.currentTimeMillis()); //for real random
+    //static Random random = new Random();
     
     /**
      * generate set of points within limits

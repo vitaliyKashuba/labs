@@ -1,9 +1,12 @@
 package forel;
 
+import static berestlabs.BerestLabs.LEARNING_LIMIT;
 import java.util.ArrayList;
 import java.util.Random;
 import berestlabs.GraphCreator;
 import berestlabs.IRClass;
+import berestlabs.IRUtil;
+import java.io.IOException;
 
 public class Main
 {  
@@ -66,9 +69,9 @@ public class Main
     }
     
     
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
-        ArrayList pts1 = FORELUtil.generatePoints(15, 0, 60, 0, 60);
+        /*ArrayList pts1 = FORELUtil.generatePoints(15, 0, 60, 0, 60);
         ArrayList pts2 = FORELUtil.generatePoints(15, 40, 100, 40, 100);
         ArrayList pts3 = FORELUtil.generatePoints(15, 40, 100, 0, 60);
         ArrayList pts4 = FORELUtil.generatePoints(15, 0, 60, 40, 100);
@@ -76,37 +79,52 @@ public class Main
         points.addAll(pts1);
         points.addAll(pts2);
         points.addAll(pts3);
-        points.addAll(pts4);
+        points.addAll(pts4);*/
         
-        for (int i = 0; i < points.size(); i++)
+        /*for (int i = 0; i < points.size(); i++)
         {
             System.out.println(points.get(i)[0] + " " + points.get(i)[1]);
+        }*/
+        
+        String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\7\\1.bmp";
+        String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\7\\2.bmp";
+        
+        int[][] m1 = IRUtil.imageToMatrix(IRUtil.loadImage(path));
+        int[][] m2 = IRUtil.imageToMatrix(IRUtil.loadImage(path2));
+        
+        IRClass class1 = new IRClass();
+        class1.learn(m1, LEARNING_LIMIT);
+
+        IRClass class2 = new IRClass();
+        class2.learn(m2, LEARNING_LIMIT);
+        
+        int[][] pts = class1.getTwoDimensionalData().getTwoDimRealizations();
+        int[][] pts2 = class2.getTwoDimensionalData().getTwoDimRealizations();
+        
+        for (int[] p : pts)
+        {
+            points.add(p);
         }
+        
+        for (int[] p2 : pts2)
+        {
+            points.add(p2);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         FORELClass baseClass = new FORELClass();
         baseClass.learn(points);
         
         gc.addIRClass(baseClass);
             
-        
-       // System.out.println(baseClass.getRadius());
-        
-        
-        
-        
-        /*
-        ArrayList<int[]> tx = findTaxone(baseClass);
-        
-        IRClass taxone = new IRClass();
-        taxone.learn(tx);
-        taxones.add(taxone);
-        
-        points.removeAll(tx);
-        
-        FORELClass newBaseClass = new FORELClass();
-        newBaseClass.learn(points);
-        
-        ArrayList<int[]> tx2 = findTaxone(newBaseClass);*/
         
         try  //fault in last taxone because no exit-statement for recursion
         {
@@ -119,7 +137,7 @@ public class Main
         {
             for(IRClass c : taxones)
             {
-                gc.addIRClass(c);
+               gc.addIRClass(c);
             }
         } 
         catch (Exception e)

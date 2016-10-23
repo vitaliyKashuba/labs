@@ -307,7 +307,7 @@ public class IRClass
     /**
      * contain etalon and realizations for two-dimensional graphic
      */
-    class TwoDimensionalData
+    public class TwoDimensionalData
     {
         private int [] twoDimEtalon;
         private int [][] twoDimRealizations;
