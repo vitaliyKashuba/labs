@@ -8,12 +8,31 @@ import berestlabs.IRClass;
 public class Main
 {  
     static GraphCreator gc = new GraphCreator();
+    static ArrayList<IRClass> taxones = new ArrayList<>();
+    static ArrayList<int[]> points = new ArrayList();
     
+    
+    static void findAllTaxones(FORELClass baseClass)
+    {
+        ArrayList<int[]> tx = findTaxone(baseClass);
+        
+        IRClass taxone = new IRClass();
+        taxone.learn(tx);
+        taxones.add(taxone);
+        
+        points.removeAll(tx);
+        
+        FORELClass taxoneExtractedClass = new FORELClass();
+        taxoneExtractedClass.learn(points);
+        
+        findAllTaxones(taxoneExtractedClass);
+    }
+     
     /**
      * call itself untill taxone found or last class element shoulb out of taxone
      * @param baseClass 
      */
-    static void findTaxone(FORELClass baseClass)
+    static ArrayList<int[]> findTaxone(FORELClass baseClass)
     {
         FORELClass subclass = new FORELClass();
         
@@ -21,12 +40,12 @@ public class Main
         baseClass.calculateNewRadius();
         ArrayList<int[]> tx = baseClass.calculateTaxone(c);
         
-        gc.addIRClass(baseClass);
+        //gc.addIRClass(baseClass);
         
         if(baseClass.isTaxoneCalculated())
         {
             System.out.println("same");
-            return;
+            return tx; //called inside
         }
         else
         {
@@ -34,14 +53,16 @@ public class Main
             subclass.setRadius(baseClass.getRadius());
             try
             {
-                findTaxone(subclass);
+                tx = findTaxone(subclass);
             } 
             catch (Exception e) // can fail for last elements of base class
             {
                 System.out.println("can't calculate taxone");
-                return;
+                return tx;
             }   
         }
+        //System.out.println(tx.size());
+        return tx; // called in last time
     }
     
     
@@ -52,7 +73,6 @@ public class Main
         ArrayList pts3 = FORELUtil.generatePoints(15, 40, 100, 0, 60);
         ArrayList pts4 = FORELUtil.generatePoints(15, 0, 60, 40, 100);
         
-        ArrayList<int[]> points = new ArrayList();
         points.addAll(pts1);
         points.addAll(pts2);
         points.addAll(pts3);
@@ -66,12 +86,48 @@ public class Main
         FORELClass baseClass = new FORELClass();
         baseClass.learn(points);
         
-        //gc.addIRClass(baseClass);
-        //gc.show();
+        gc.addIRClass(baseClass);
+            
         
-        System.out.println(baseClass.getRadius());
+       // System.out.println(baseClass.getRadius());
         
-        findTaxone(baseClass);
+        
+        
+        
+        /*
+        ArrayList<int[]> tx = findTaxone(baseClass);
+        
+        IRClass taxone = new IRClass();
+        taxone.learn(tx);
+        taxones.add(taxone);
+        
+        points.removeAll(tx);
+        
+        FORELClass newBaseClass = new FORELClass();
+        newBaseClass.learn(points);
+        
+        ArrayList<int[]> tx2 = findTaxone(newBaseClass);*/
+        
+        try  //fault in last taxone because no exit-statement for recursion
+        {
+            findAllTaxones(baseClass);      
+        }
+        catch (Exception e)
+        { }
+        
+        try  //can fail when taxone with one element
+        {
+            for(IRClass c : taxones)
+            {
+                gc.addIRClass(c);
+            }
+        } 
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        System.out.println("Taxones count: " + taxones.size());
         
         gc.show();
         

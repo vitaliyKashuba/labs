@@ -127,7 +127,7 @@ public class GraphCreator
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
         chart.getStyler().setChartTitleVisible(false);
         chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
-        chart.getStyler().setMarkerSize(5);
+        chart.getStyler().setMarkerSize(10);
         
         circles = new TreeMap<>();
     }
