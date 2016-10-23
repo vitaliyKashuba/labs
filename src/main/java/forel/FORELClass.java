@@ -28,6 +28,11 @@ public class FORELClass extends IRClass
         return points.get(FORELUtil.generateNumber(0, points.size()));
     }
     
+    void setRadius(double radius)
+    {
+        this.radius = radius;
+    }
+    
     double calculateNewRadius()
     {
         radius = radius*RADIUS_CORRECTION_COEFFICIENT;
@@ -45,6 +50,19 @@ public class FORELClass extends IRClass
             }
         }
         return (ArrayList<int[]>)taxonePoints.clone();
+    }
+    
+    public boolean isSame()
+    {
+        System.out.println("p " + points.size() + "tx " + taxonePoints.size());
+        if (points.size() == taxonePoints.size())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
 }

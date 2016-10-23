@@ -7,6 +7,38 @@ import berestlabs.IRClass;
 
 public class Main
 {  
+    static GraphCreator gc = new GraphCreator();
+    
+    static void findTaxone(FORELClass baseClass)
+    {
+        FORELClass subclass = new FORELClass();
+        
+        int[] c = baseClass.selectNewCenter();
+        baseClass.calculateNewRadius();
+        ArrayList<int[]> tx = baseClass.calculateTaxone(c);
+        
+        gc.addIRClass(baseClass);
+        
+        if(baseClass.isSame())
+        {
+            System.out.println("same");
+            return;
+        }
+        else
+        {
+            subclass.learn(tx);
+            subclass.setRadius(baseClass.getRadius());
+            try
+            {
+                findTaxone(subclass);
+            } catch (Exception e)
+            {
+                return;
+            }   
+        }
+    }
+    
+    
     public static void main(String[] args)
     {
         ArrayList pts1 = FORELUtil.generatePoints(15, 0, 60, 0, 60);
@@ -28,20 +60,12 @@ public class Main
         FORELClass baseClass = new FORELClass();
         baseClass.learn(points);
         
-        GraphCreator gc = new GraphCreator();
-        gc.addIRClass(baseClass);
+        //gc.addIRClass(baseClass);
         //gc.show();
         
         System.out.println(baseClass.getRadius());
         
-        int[] c = baseClass.selectNewCenter();
-        double r = baseClass.calculateNewRadius();
-        ArrayList<int[]> tx1 = baseClass.calculateTaxone(c);
-        
-        IRClass taxone1 = new IRClass();
-        taxone1.learn(tx1);
-        
-        gc.addIRClass(taxone1);
+        findTaxone(baseClass);
         
         gc.show();
         
