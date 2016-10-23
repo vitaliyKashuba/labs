@@ -14,7 +14,11 @@ public class Main
     static ArrayList<IRClass> taxones = new ArrayList<>();
     static ArrayList<int[]> points = new ArrayList();
     
-    
+    /**
+     * find all taxones
+     * recursive, no exit statement, so ends with exception
+     * @param baseClass 
+     */
     static void findAllTaxones(FORELClass baseClass)
     {
         ArrayList<int[]> tx = findTaxone(baseClass);
@@ -23,7 +27,7 @@ public class Main
         taxone.learn(tx);
         taxones.add(taxone);
         
-        /*if(taxones.size()>3)
+        /*if(taxones.size()>3) //uncomment for FOREL2
         {
             return;
         }*/
@@ -86,39 +90,25 @@ public class Main
         points.addAll(pts3);
         points.addAll(pts4);
         
-        /*String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\7\\1.bmp";
+        /*String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\7\\1.bmp"; //uncomment to load image instead of generating data
         String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\7\\2.bmp";
-        
         int[][] m1 = IRUtil.imageToMatrix(IRUtil.loadImage(path));
         int[][] m2 = IRUtil.imageToMatrix(IRUtil.loadImage(path2));
-        
         IRClass class1 = new IRClass();
         class1.learn(m1, LEARNING_LIMIT);
-
         IRClass class2 = new IRClass();
         class2.learn(m2, LEARNING_LIMIT);
-        
         int[][] pts = class1.getTwoDimensionalData().getTwoDimRealizations();
         int[][] pts2 = class2.getTwoDimensionalData().getTwoDimRealizations();
-        
         for (int[] p : pts)
         {
             points.add(p);
         }
-        
         for (int[] p2 : pts2)
         {
             points.add(p2);
-        }*/
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        }*/    //uncomment to load image instead of generating data
+
         
         FORELClass baseClass = new FORELClass();
         baseClass.learn(points);

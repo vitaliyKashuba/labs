@@ -37,12 +37,21 @@ public class FORELClass extends IRClass
         this.radius = radius;
     }
     
+    /**
+     * new radius = old radius * 0.9
+     * @return 
+     */
     double calculateNewRadius()
     {
         radius = radius*RADIUS_CORRECTION_COEFFICIENT;
         return radius;
     }
     
+    /**
+     * return points within radius of new center
+     * @param center
+     * @return 
+     */
     ArrayList<int[]> calculateTaxone(int [] center)
     {
         taxonePoints = new ArrayList<>();
