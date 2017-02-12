@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -50,10 +52,42 @@ public class IRUtil
         return matrix;
     }
     
-    public static void writeToXml(String xmlName)
+    /*public static void writeToXml(String xmlName)
     {
         Workbook book = new HSSFWorkbook();
-        Sheet sheet = book.createSheet("1");
+        Sheet sheet = book.createSheet("1");    
+    }*/
+    
+    /**
+     * split image into small squares
+     * @param img image to split
+     * @param size sizr of square
+     * @return array list with squares
+     */
+    public static List imageSplit(BufferedImage img, int size) //throws IOException
+    {
+        int height = img.getHeight()/size; //TODO add size check
+        int width = img.getWidth()/size;
+        ArrayList<BufferedImage> images = new ArrayList();
         
+        for(int h = 0; h < height; h++)
+        {
+            for(int w = 0; w < width; w++)
+            {
+                BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
+                int t = 0;
+                for(int i = 0; i < size; i++)
+                {
+                    for(int j = 0; j < size; j++)
+                    {
+                        image.setRGB(i, j, img.getRGB( (w*size + i), (h*size + j) )  );
+                    }
+                }
+                images.add(image);
+                //ImageIO.write(image, "png", new File("output/img" + w + "-" + h + ".png"));
+            }
+        }
+        
+        return images;
     }
 }
