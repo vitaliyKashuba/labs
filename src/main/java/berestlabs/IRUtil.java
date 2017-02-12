@@ -64,7 +64,7 @@ public class IRUtil
      * @param size sizr of square
      * @return array list with squares
      */
-    public static List imageSplit(BufferedImage img, int size) //throws IOException
+    public static ArrayList imageSplit(BufferedImage img, int size) //throws IOException
     {
         int height = img.getHeight()/size; //TODO add size check
         int width = img.getWidth()/size;
