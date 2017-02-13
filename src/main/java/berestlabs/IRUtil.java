@@ -90,6 +90,13 @@ public class IRUtil
         return images;
     }
     
+    /**
+     * builds image (map) from small recognized surface images
+     * @param surfaces
+     * @param sizeX size (must be equal to loaded image)
+     * @param sizeY size (must be equal to loaded image)
+     * @return 
+     */
     public static BufferedImage imageBuild(ArrayList<IRSurfaceClass> surfaces, int sizeX, int sizeY) //TODO add size check
     {
         BufferedImage map = new BufferedImage(sizeX, sizeY, BufferedImage.TYPE_INT_RGB);
@@ -108,6 +115,12 @@ public class IRUtil
         return map;
     }
     
+    /**
+     * write image to filesystem
+     * @param img
+     * @param path
+     * @throws IOException 
+     */
     public static void imageWrite(BufferedImage img, String path) throws IOException
     {
         ImageIO.write(img, "png", new File(path));

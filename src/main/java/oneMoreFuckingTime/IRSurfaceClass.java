@@ -14,6 +14,12 @@ public class IRSurfaceClass extends IRClass
     private int xCoordinate;
     private int yCoordinate;
     
+    /**
+     * auto-learning IRClass contructor
+     * @param img image to learn from
+     * @param x coordinate on map
+     * @param y coordinate on map
+     */
     public IRSurfaceClass(BufferedImage img, int x, int y) 
     {
         super();
