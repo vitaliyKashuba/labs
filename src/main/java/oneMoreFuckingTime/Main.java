@@ -52,10 +52,10 @@ public class Main
             
             IRUtil.drawBorder(surface.getSurfaceImage(), Color.RED);
             IRUtil.drawText(surface.getSurfaceImage(), nm, Color.RED, 0, 20);
-            ImageIO.write(surface.getSurfaceImage(), "png", new File("output/" + surface.getX() + "-" + surface.getY() + ".png"));
+            //ImageIO.write(surface.getSurfaceImage(), "png", new File("output/" + surface.getX() + "-" + surface.getY() + ".png"));
         }
         
-        
-        
+        BufferedImage output = IRUtil.imageBuild(surfaces, input.getWidth(), input.getHeight());
+        IRUtil.imageWrite(output, "output/output.png");
     }
 }

@@ -90,6 +90,29 @@ public class IRUtil
         return images;
     }
     
+    public static BufferedImage imageBuild(ArrayList<IRSurfaceClass> surfaces, int sizeX, int sizeY) //TODO add size check
+    {
+        BufferedImage map = new BufferedImage(sizeX, sizeY, BufferedImage.TYPE_INT_RGB);
+        for (IRSurfaceClass s : surfaces)
+        {
+            BufferedImage img = s.getSurfaceImage();
+            for (int x = 0; x < img.getWidth(); x++)
+            {
+                for (int y = 0; y < img.getHeight(); y++)
+                {
+                    map.setRGB(s.getX()*img.getWidth() + x, s.getY()*img.getHeight() + y, img.getRGB(x, y));
+                }
+            }
+        }
+        
+        return map;
+    }
+    
+    public static void imageWrite(BufferedImage img, String path) throws IOException
+    {
+        ImageIO.write(img, "png", new File(path));
+    }
+    
     /**
      * draw border for image
      * @param img
