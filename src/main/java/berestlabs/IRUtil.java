@@ -6,15 +6,19 @@
 package berestlabs;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 import javax.imageio.ImageIO;
+import oneMoreFuckingTime.IRSurfaceClass;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+//import oneMoreFuckingTime.IRSurfaceClass.IRSCCoordinates;
 
 /**
  * Utility functions for Image Recognition
@@ -52,23 +56,18 @@ public class IRUtil
         return matrix;
     }
     
-    /*public static void writeToXml(String xmlName)
-    {
-        Workbook book = new HSSFWorkbook();
-        Sheet sheet = book.createSheet("1");    
-    }*/
-    
     /**
      * split image into small squares
      * @param img image to split
      * @param size sizr of square
-     * @return array list with squares
+     * @return array list or IRSurfaceClasses that contains image squares and its coordinates
      */
     public static ArrayList imageSplit(BufferedImage img, int size) //throws IOException
     {
         int height = img.getHeight()/size; //TODO add size check
         int width = img.getWidth()/size;
-        ArrayList<BufferedImage> images = new ArrayList();
+
+        ArrayList<IRSurfaceClass> images = new ArrayList<>();
         
         for(int h = 0; h < height; h++)
         {
@@ -83,11 +82,45 @@ public class IRUtil
                         image.setRGB(i, j, img.getRGB( (w*size + i), (h*size + j) )  );
                     }
                 }
-                images.add(image);
-                //ImageIO.write(image, "png", new File("output/img" + w + "-" + h + ".png"));
+                
+                images.add(new IRSurfaceClass(image, w, h));
             }
         }
         
         return images;
+    }
+    
+    /**
+     * draw border for image
+     * @param img
+     * @param color color of border
+     */
+    public static void drawBorder(BufferedImage img, Color color)
+    {
+        for (int i = 0; i < img.getWidth(); i++)
+        {
+            for (int j = 0; j < img.getHeight(); j++)
+            {
+                if (i == 0 || j == 0 || i == img.getWidth()-1 || j == img.getHeight()-1)
+                {
+                    img.setRGB(i, j, color.getRGB());
+                }
+            }
+        }
+    }
+    
+    /**
+     * draw text on image
+     * @param img
+     * @param text
+     * @param color
+     * @param x coordinate of text
+     * @param y coordinate of text 
+     */
+    public static void drawText(BufferedImage img, String text, Color color, int x, int y)
+    {
+        Graphics graphics = img.getGraphics();
+        graphics.setColor(color);
+        graphics.drawString(text, 0, 20);
     }
 }

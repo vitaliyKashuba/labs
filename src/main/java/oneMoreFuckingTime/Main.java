@@ -3,13 +3,18 @@ package oneMoreFuckingTime;
 import berestlabs.IRClass;
 import berestlabs.IRExamenator;
 import berestlabs.IRUtil;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+//import oneMoreFuckingTime.IRSurfaceClass.IRSCCoordinates;
+
 /**
  *
  * @author vitaliy
@@ -30,19 +35,12 @@ public class Main
         }   
         
         BufferedImage input = IRUtil.loadImage("input.png");
-        ArrayList<BufferedImage> images = IRUtil.imageSplit(input, 40);
-        ArrayList<IRClass> surfaces = new ArrayList<>();
         
-        int i = 0; //TODO counter to avoid renaming. fix it. later
-        for(BufferedImage image : images)
+        ArrayList<IRSurfaceClass> surfaces = IRUtil.imageSplit(input, 40);
+        for (IRSurfaceClass surface : surfaces)
         {
-            int[][] mas = IRUtil.imageToMatrix(image);
-            IRClass c = new IRClass();
-            c.learn(mas, mas.length);
-            surfaces.add(c);
-            
             String nm;
-            IRClass recognized = examenator.recognize(c.getEtalonVector());
+            IRClass recognized = examenator.recognize(surface.getEtalonVector());
             if(recognized != null)
             {
                 nm = recognized.getName();
@@ -51,9 +49,13 @@ public class Main
             {
                 nm = "unrecognized";
             }
-            i++;
-            ImageIO.write(image, "png", new File("output/" + i + "-" + nm + ".png"));
+            
+            IRUtil.drawBorder(surface.getSurfaceImage(), Color.RED);
+            IRUtil.drawText(surface.getSurfaceImage(), nm, Color.RED, 0, 20);
+            ImageIO.write(surface.getSurfaceImage(), "png", new File("output/" + surface.getX() + "-" + surface.getY() + ".png"));
         }
+        
+        
         
     }
 }
