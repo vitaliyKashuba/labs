@@ -1,5 +1,6 @@
 package oneMoreFuckingTime;
 
+import berestlabs.GraphCreator;
 import berestlabs.IRClass;
 import berestlabs.IRExamenator;
 import berestlabs.IRUtil;
@@ -24,14 +25,17 @@ public class Main
     public static void main(String args[]) throws IOException //too many code under try-catch for non-handling situation (always exit on exception)
     {
         IRExamenator examenator = new IRExamenator();
+        GraphCreator gc = new GraphCreator();
         
         for (String path : args)  
         {
             int[][] mas = IRUtil.imageToMatrix(IRUtil.loadImage(path));
             IRClass c = new IRClass();
             c.learn(mas, mas.length);
-            c.setName(path.substring(13, path.length()-6)); //TODO fix it for unified naming
+            //c.setName(path.substring(13, path.length()-6)); // gc.show breacs if class names duolicates
+            c.setName(path.substring(13, path.length()-4)); //TODO fix it for unified naming
             examenator.addExamClass(c);
+            gc.addIRClass(c);
         }   
         
         BufferedImage input = IRUtil.loadImage("input/input.png");
@@ -57,5 +61,7 @@ public class Main
         
         BufferedImage output = IRUtil.imageBuild(surfaces, input.getWidth(), input.getHeight());
         IRUtil.imageWrite(output, "output/output.png");
+        
+        gc.show();
     }
 }
