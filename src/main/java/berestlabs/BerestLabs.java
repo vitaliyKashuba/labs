@@ -44,7 +44,6 @@ public class BerestLabs {
             nextLevelClases.add(cl.getNextLevelClass());
             gc.addIRClass(cl.getNextLevelClass());
         }
-        //System.out.println("next level");
         LEVELS++;
         deepLearnStatic(nextLevelClases, gc);
     }
@@ -54,6 +53,7 @@ public class BerestLabs {
         GraphCreator gc = new GraphCreator();
         IRExamenator examenator = new IRExamenator();
         ArrayList<IRClass> classes = new ArrayList<>();
+        
         if (args.length > 0) //run code
         {
             ArrayList<IRExamenator.ExamPair> examPairs = new ArrayList<>();
@@ -73,7 +73,6 @@ public class BerestLabs {
             }  //class learning cycle
             
             //here begins the deep learning
-            
             try 
             {
                deepLearnStatic(classes, gc);
@@ -81,12 +80,9 @@ public class BerestLabs {
             {
                 System.out.println("learning finished, levels " + LEVELS);
             }
-            
-            
             //deep learning end
             
             examenator.exam(examPairs, true);
-            
             
             try 
             {
@@ -96,211 +92,7 @@ public class BerestLabs {
                 System.out.println("deep exam finished");
             }
             System.out.println(examenator.getDEEP_EXAM_SUCCESS_COUNT() + " recognized wright, " + examenator.getDEEP_EXAM_FAIL_COUNT() + " recognized wrong");
-            //gc.show();  
-            
-            
+            //gc.show();     
         }  //end of run code
-        
-        else //debug\run-from-IDE-code
-        {
-            String path = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\7\\1.bmp";
-            String path2 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\7\\2.bmp";
-            String path3 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\13\\1.bmp";
-            String path4 = "G:\\__haveNoIdeaWhatImDoingHere\\1\\var\\13\\2.bmp";
-            
-            int[][] m1 = IRUtil.imageToMatrix(IRUtil.loadImage(path));
-            int[][] m2 = IRUtil.imageToMatrix(IRUtil.loadImage(path2));
-            int[][] m3 = IRUtil.imageToMatrix(IRUtil.loadImage(path3));
-            int[][] m4 = IRUtil.imageToMatrix(IRUtil.loadImage(path4));
-
-            IRClass class1 = new IRClass();
-            class1.learn(m1, LEARNING_LIMIT);
-
-            IRClass class2 = new IRClass();
-            class2.learn(m2, LEARNING_LIMIT);
-
-            IRClass class3 = new IRClass();
-            class3.learn(m3, LEARNING_LIMIT);
-            
-            IRClass class4 = new IRClass();
-            class4.learn(m4, LEARNING_LIMIT);
-
-            //System.out.println(IRClass.isIntersect(class1, class2));
-
-            examenator.addExamClass(class2);
-            examenator.addExamClass(class1);
-            examenator.addExamClass(class3);
-
-            //IRExamenator.test(class1.getEtalonVector(), class1, true);
-
-            /*TreeMap<int[], IRClass> unlearnedRealizations = new TreeMap<>();
-
-            for (int i = learningLimit; i < m1.length; i++)
-            {
-                System.out.println(m1);
-                //unlearnedRealizations.put(m1[i], class1);
-                //unlearnedRealizations.put(m2[i], class2);
-            }
-
-            System.out.println(unlearnedRealizations.size());*/
-
-            ArrayList<IRExamenator.ExamPair> examPairs = new ArrayList<>();
-            for (int i = LEARNING_LIMIT; i < m1.length; i++)
-            {
-                examPairs.add(new IRExamenator.ExamPair(m1[i], class1));
-                examPairs.add(new IRExamenator.ExamPair(m2[i], class2));
-                examPairs.add(new IRExamenator.ExamPair(m3[i], class3));
-            }
-
-            //System.out.println(examPairs.size());
-            examenator.exam(examPairs, true);
-            
-            
-            //graphics code below
-            
-            /*
-            
-            
-            
-            class1.convertToTwoDimensialSpace();
-            IRClass.TwoDimensionalData tdData = class1.getTwoDimensionalData();
-            
-            double[] xData = new double[tdData.getTwoDimRealizations().length];
-            double[] yData = new double[tdData.getTwoDimRealizations().length];
-            
-            //System.out.println(tdData.getTwoDimRealizations().length);
-            // Create Chart
-            
-            int[][] points = tdData.getTwoDimRealizations();
-            
-            for(int i = 0; i < points.length; i ++)
-            {
-                xData[i] = points[i][0];
-                yData[i] = points[i][1];
-            }
-            
-            int[] x = {tdData.getTwoDimEtalon()[0]};
-            int[] y = {tdData.getTwoDimEtalon()[1]};
-            
-            //XYChart chart1 = QuickChart.getChart("Sample Chart", "X", "Y", "y(2x)", new double[] {120.0, 130.0}, new double []{150.0, 140.0});
-            
-            XYChart chart1 = new XYChartBuilder().width(800).height(600).build();
-            chart1.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
-            chart1.getStyler().setChartTitleVisible(false);
-            chart1.getStyler().setLegendPosition(LegendPosition.InsideSW);
-            chart1.getStyler().setMarkerSize(16);
-            //chart1.getStyler().set;
-            
-            //chart1.addSeries("null", x, y);
-            
-            XYSeries series = chart1.addSeries("class1", xData, yData);
-            series.setMarkerColor(Color.yellow);
-            
-            XYSeries series2 = chart1.addSeries("etalon1", x, y);
-            series2.setMarkerColor(Color.BLACK);
-            //chart1.addSeries("Gaussian Blob", xData, yData);
-
-            
-            
-            
-            
-            
-            class2.convertToTwoDimensialSpace();
-            IRClass.TwoDimensionalData tdData2 = class2.getTwoDimensionalData();
-            
-            double[] xData2 = new double[tdData2.getTwoDimRealizations().length];
-            double[] yData2 = new double[tdData2.getTwoDimRealizations().length];
-            
-            //System.out.println(tdData.getTwoDimRealizations().length);
-            // Create Chart
-            
-            int[][] points2 = tdData2.getTwoDimRealizations();
-            
-            for(int i = 0; i < points.length; i ++)
-            {
-                xData2[i] = points2[i][0];
-                yData2[i] = points2[i][1];
-            }
-            
-            for(int i = 0; i < xData2.length; i++)
-            {
-                System.out.println(xData2[i] + " " + yData2[i]);
-            }
-            
-            int[] x2 = {tdData2.getTwoDimEtalon()[0]};
-            int[] y2 = {tdData2.getTwoDimEtalon()[1]};
-            
-            XYSeries series3 = chart1.addSeries("class2", xData2, yData2);
-            series3.setMarkerColor(Color.BLUE);
-            Marker circle = new Circle();
-            series3.setMarker(circle);
-            
-            System.out.println(series3.getLineStyle());
-            
-            XYSeries series4 = chart1.addSeries("etalon2", x2, y2);
-            series4.setMarkerColor(Color.DARK_GRAY);
-                        
-            double tdRadius = tdData2.getTwoDimRadius();
-            //int roundCordsCount = (int)tdRadius*2;
-            int roundCordsCount = 90;
-            
-            double[] xRound = new double[roundCordsCount];
-            double[] yRound = new double[roundCordsCount];
-            
-            for(int i = 0; i<roundCordsCount; i++)
-            {
-                double yCord = 180 - tdRadius + i;
-                double xCord = Math.pow( (Math.pow(tdRadius, 2) -  Math.pow(yCord-y2[0], 2) ), 0.5) + x2[0];
-                
-                xRound[i] = xCord;
-                yRound[i] = yCord;
-                
-                System.out.println(xCord + " " + yCord);
-            }
-            
-            System.out.println(tdRadius);
-            
-            chart1.addSeries("round", xRound, yRound);
-            //chart1.addSeries("round2", yRound, xRound);
-            
-            // Show it
-            new SwingWrapper(chart1).displayChart();*/
-            
-            
-            
-            
-            
-            gc.addIRClass(class1);
-            gc.addIRClass(class2);
-            //gc.addIRClass(class3);
-            //gc.addIRClass(class4);
-            
-            ArrayList<IRClass> iclasses = new ArrayList<>();
-            iclasses.add(class1);
-            iclasses.add(class2);
-            //classes.add(class3);
-            
-            class1.deepLearn(iclasses);
-            class2.deepLearn(iclasses);
-            
-            IRClass level2c1 = class1.getNextLevelClass();
-            IRClass level2c2 = class2.getNextLevelClass();
-            
-            ArrayList<IRClass> classesLevel2 = new ArrayList<>();
-            classesLevel2.add(level2c1);
-            classesLevel2.add(level2c2);
-            
-            //level2c1.deepLearn(classesLevel2);
-            level2c2.deepLearn(classesLevel2);
-            
-            gc.addIRClass(level2c1);
-            gc.addIRClass(level2c2);
-            //gc.addIRClass(level2c1.getNextLevelClass());
-            gc.addIRClass(level2c2.getNextLevelClass());
-            
-            gc.show();
-                    
-        }
     }
-    
 }
