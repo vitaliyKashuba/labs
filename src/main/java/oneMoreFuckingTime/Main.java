@@ -34,9 +34,9 @@ public class Main
             examenator.addExamClass(c);
         }   
         
-        BufferedImage input = IRUtil.loadImage("input.png");
+        BufferedImage input = IRUtil.loadImage("input/input.png");
         
-        ArrayList<IRSurfaceClass> surfaces = IRUtil.imageSplit(input, 40);
+        ArrayList<IRSurfaceClass> surfaces = IRUtil.imageSplit(input, 50);
         for (IRSurfaceClass surface : surfaces)
         {
             String nm;
